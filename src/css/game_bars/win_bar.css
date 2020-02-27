@@ -1,0 +1,9 @@
+#win-bar {
+  grid-area: other-bars;
+}
+
+#win-text {
+  font-size: 1.2em;
+  color: rgb(200, 200, 200);
+  text-align: center;
+}

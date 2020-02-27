@@ -1,0 +1,17 @@
+#confirm-bar {
+  grid-area: other-bars;
+  justify-content: center;
+}
+
+.confirm-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+.confirm-btn > img {
+  width: 75%;
+  height: 75%;
+}

@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  background-color: rgb(30, 30, 30);
+  font-family: monospace;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#container {
+  display: grid;
+  grid-template-rows: auto 1.2fr 1fr;
+  grid-template-areas:
+    "field"
+    "other-bars"
+    "control-bar";
+}
+
+.no-events {
+  pointer-events: none;
+}
+
+.selected {
+  background-color: rgba(200, 68, 0, 0.7) !important;
+}
