@@ -1,5 +1,8 @@
-#confirm-bar {
-  grid-area: other-bars;
+#confirm-rs-bar {
+  justify-content: center;
+}
+
+#confirm-ng-bar {
   justify-content: center;
 }
 

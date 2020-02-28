@@ -1,4 +1,4 @@
-.numberbox {
+.nbr-box {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,9 +10,10 @@
   border-width: 1px;
   border-color: rgb(90, 84, 84, 0.5);
   border-style: dotted;
+  user-select: none;
 }
 
-.numberbox:hover {
+.nbr-box:hover {
   border-style: solid;
   border-color: rgba(245, 222, 179, 0.5);
   cursor: pointer;
@@ -35,7 +36,7 @@
   min-height: 8px;
 }
 
-.initial-num {
+.initial-nbr {
   background-color: rgba(100, 100, 100, 0.7);
   cursor: default !important;
 }

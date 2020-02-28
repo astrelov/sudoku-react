@@ -1,6 +1,8 @@
 body {
+  height: 100vh;
   margin: 0;
   background-color: rgb(30, 30, 30);
+  font-size: 16px;
   font-family: monospace;
 }
 
@@ -10,13 +12,15 @@ img {
   display: block;
 }
 
-#container {
+p {
+  font-size: 1.2rem;
+  color: rgb(200, 200, 200);
+  text-align: center;
+}
+
+#game {
   display: grid;
   grid-template-rows: auto 1.2fr 1fr;
-  grid-template-areas:
-    "field"
-    "other-bars"
-    "control-bar";
 }
 
 .no-events {

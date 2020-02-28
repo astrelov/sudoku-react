@@ -1,5 +1,23 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Image } from './js/components/Image'
+import { Header } from './js/components/Header'
+import { Footer } from './js/components/Footer'
+import { Game } from './js/components/Game/Game'
 
-ReactDOM.render(<Image src="./src/resources/img/controls/easy_c8c8c8.png" className="no-events"/>, document.querySelector('#container'))
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  render() {
+    return (
+      <>
+        <Header />
+        <Game />
+        <Footer />
+      </>
+    )
+  }
+}
+
+ReactDOM.render(<App />, document.querySelector('#container'))

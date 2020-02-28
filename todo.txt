@@ -1,0 +1,28 @@
+TODO:
+
+- save best 10 times for each difficulty in localstorage
+- save current game in localstorage for possibility to continue
+- make sure the solution for emptied field is only one
+- add posibility to input numbers with corresponding keys
+- add posibility to toggle pencil with some key
+- add posibility to erase value cursor is pointing with some key
+- make new images for difficulty selection / restart confirmation
+- on win make field unclickable
+- move bars to sides on wide viewport (width > 120% height or something like this)
+
+DONE:
+
+- empty initial html container
+- make container a grid to contain field and 2 game bars
+- feature: game difficulty selection
+- highlight newGame & restart button on click. Unhighlight on confirm/reject.
+- change html field display from flex to grid
+- highlight initial selected nums in different color
+- add amount of nums to paste remaining
+- use buttons instead of divs to prevent selecting page content on clicks
+- remove same pencil number from row/column/3x3 on number input (need to save them for undo/redo)
+- feature: restart
+- feature: undo && redo
+- feature: to type in probable box numbers
+- add notification about solve time
+- initial field generation
