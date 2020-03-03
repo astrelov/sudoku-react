@@ -1,0 +1,17 @@
+.component {
+    width: 100%;
+    height: 30px;
+    color: rgb(200, 200, 200);
+    text-align: center;
+}
+
+.component {
+    position: absolute;
+    bottom: 0;
+    font-size: 1.2rem;
+}
+
+.component > p {
+    font-size: inherit;
+    margin: 0;
+}

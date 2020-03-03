@@ -1,0 +1,46 @@
+.component {
+    padding: 0;
+    margin: auto;
+    width: 72vmin;
+    min-width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.button {
+    width: 7vmin;
+    min-width: 25px;
+    height: 7vmin;
+    min-height: 25px;
+    padding: 0;
+    background-color: inherit;
+    border-radius: 50%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(245, 245, 220, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.button:hover {
+    border-width: 2px;
+    border-color: rgba(245, 222, 179, 0.5);
+    cursor: pointer;
+}
+
+.button:focus {
+    outline: none;
+}
+
+.nbr {
+    margin: 0 !important;
+    font-size: 2rem !important;
+}
+
+.pnclNbr {
+    margin: -0.6vmin 0 0 !important;
+    font-size: 1.1rem !important;
+}
