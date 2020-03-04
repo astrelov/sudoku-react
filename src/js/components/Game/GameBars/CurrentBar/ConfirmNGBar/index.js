@@ -12,7 +12,7 @@ export const ConfirmNGBar = ({handlers, difficultyNames}) => {
     buttons.push(
       <Button
         key={dfclty.toString()}
-        classNames={['confirm-btn', 'game-bar-btn']}
+        classNames={['confirm-btn']}
         handleClick={e => handleNG(dfclty, e)}
       >
         <Text classNames={['no-events']}>{difficultyNames[dfclty]}</Text>
@@ -21,7 +21,7 @@ export const ConfirmNGBar = ({handlers, difficultyNames}) => {
   }
 
   buttons.push(
-    <Button key={'5'} classNames={['confirm-btn', 'game-bar-btn']} handleClick={handleNGReject}>
+    <Button key={'5'} classNames={['confirm-btn']} handleClick={handleNGReject}>
       <Image src={'img/controls/cancel.svg'} classNames={['no-events']}/>
     </Button>
   );

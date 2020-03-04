@@ -3,30 +3,31 @@ import {WinBar} from './WinBar';
 import {NbrBar} from './NbrBar';
 import {ConfirmNGBar} from './ConfirmNGBar';
 import {ConfirmRSBar} from './ConfirmRSBar';
+import {Bars} from '../../../Game/index'
 
 export const CurrentBar = ({
                              nbrsAmount,
                              selectedNbr,
                              gameTime,
-                             currentBarName,
+                             currentBar,
                              difficultyNames,
                              difficulty,
                              handlers,
                            }) => {
-  let currentBar;
+  let bar;
 
-  if (currentBarName === 'nbr') {
-    currentBar = <NbrBar nbrsAmount={nbrsAmount} selectedNbr={selectedNbr} handlers={handlers}/>;
+  if (currentBar === Bars.NBR) {
+    bar = <NbrBar nbrsAmount={nbrsAmount} selectedNbr={selectedNbr} handlers={handlers}/>;
   }
-  if (currentBarName === 'win') {
-    currentBar = <WinBar difficulty={difficultyNames[difficulty]} gameTime={gameTime}/>;
+  if (currentBar === Bars.WIN) {
+    bar = <WinBar difficulty={difficultyNames[difficulty]} gameTime={gameTime}/>;
   }
-  if (currentBarName === 'confirmNG') {
-    currentBar = <ConfirmNGBar handlers={handlers} difficultyNames={difficultyNames}/>;
+  if (currentBar === Bars.CONFIRM_NG) {
+    bar = <ConfirmNGBar handlers={handlers} difficultyNames={difficultyNames}/>;
   }
-  if (currentBarName === 'confirmRS') {
-    currentBar = <ConfirmRSBar handlers={handlers}/>;
+  if (currentBar === Bars.CONFIRM_RS) {
+    bar = <ConfirmRSBar handlers={handlers}/>;
   }
 
-  return currentBar;
+  return bar;
 };

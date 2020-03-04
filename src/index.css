@@ -14,11 +14,6 @@ img {
     display: block;
 }
 
-.disabled {
-    pointer-events: none;
-    opacity: 0.5;
-}
-
 .no-events {
     pointer-events: none;
 }
@@ -27,7 +22,7 @@ img {
     background-color: rgba(200, 68, 0, 0.7) !important;
 }
 
-@media (max-width: 350px) {
+@media (max-width: 400px) {
     :root {
         font-size: 8px;
     }

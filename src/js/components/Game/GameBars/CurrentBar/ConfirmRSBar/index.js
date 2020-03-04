@@ -8,10 +8,10 @@ export const ConfirmRSBar = ({handlers}) => {
 
   return (
     <div className={style.component}>
-      <Button classNames={['confirm-btn', 'game-bar-btn']} handleClick={handleRS}>
+      <Button classNames={['confirm-btn']} handleClick={handleRS}>
         <Image src={'img/controls/confirm.svg'} classNames={['no-events']}/>
       </Button>
-      <Button classNames={['confirm-btn', 'game-bar-btn']} handleClick={handleRSReject}>
+      <Button classNames={['confirm-btn']} handleClick={handleRSReject}>
         <Image src={'img/controls/cancel.svg'} classNames={['no-events']}/>
       </Button>
     </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import {Button} from '../../Button';
 import {Text} from '../../Text';
 
-export const GameClock = ({classNames, time = 0}) => {
+export const GameClock = ({classNames = [], time = 0}) => {
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
   let timeStr = '';
@@ -12,7 +12,7 @@ export const GameClock = ({classNames, time = 0}) => {
   if (seconds || !minutes) timeStr += seconds + 's';
 
   return (
-    <Button classNames={classNames} isActive={false}>
+    <Button classNames={classNames}>
       <Text>{timeStr}</Text>
     </Button>
   );

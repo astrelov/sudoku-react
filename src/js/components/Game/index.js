@@ -1,17 +1,22 @@
 import React from 'react';
 import {Field} from './Field';
 import {ControlBar} from './GameBars/ControlBar';
-import {ChangesList} from '../../changes_list';
-import {Changes} from '../../changes';
 import {CurrentBar} from './GameBars/CurrentBar';
 import style from './index.module.css';
+
+export const Bars = {
+  NBR: 1,
+  WIN: 2,
+  CONFIRM_NG: 3,
+  CONFIRM_RS: 4,
+};
 
 export class Game extends React.Component {
   constructor(props) {
     super(props);
 
-    this.difficultyNames = ['newbie', 'easy', 'medium', 'hard', 'expert'];
-    this.difficulty = 0;
+    this.difficultyNames = props.difficultyNames || ['1', '2', '3', '4', '5'];
+    this.difficulty = props.difficulty || 0;
 
     const field = this.generateField();
     this.initialField = Game.cloneField(field);
@@ -26,50 +31,48 @@ export class Game extends React.Component {
       canRedo: false,
       gameTime: 0,
       isWin: false,
-      confirming: false, // false, confirmNG, confirmRS - highlighting ng/rs btns on control bar
-      currentBarName: 'nbr', // nbr, win, confirmNG, confirmRS - rendering one of them
+      currentBar: Bars.NBR, // rendering one of them
     };
 
     this.handlers = {
+      // TODO refactor to get only boolean, not {target}
       handlePencilChange: ({target}) => {
         const isSelected = target.classList.contains('selected');
 
         this.setState({isPencil: !isSelected});
       },
 
+      // TODO refactor to get only boolean, not {target}
       handleNGConfirm: ({target}) => {
         const confirming = target.classList.contains('selected');
 
         this.setState({
-          confirming: confirming ? false : 'confirmNG',
-          currentBarName: confirming ? (this.state.isWin ? 'win' : 'nbr') : 'confirmNG',
+          currentBar: confirming ? (this.state.isWin ? Bars.WIN : Bars.NBR) : Bars.CONFIRM_NG,
         });
       },
 
       handleNGReject: () => {
         this.setState({
-          confirming: false,
-          currentBarName: this.state.isWin ? 'win' : 'nbr',
+          currentBar: this.state.isWin ? Bars.WIN : Bars.NBR,
         });
       },
 
+      // TODO refactor to get only boolean, not {target}
       handleRSConfirm: ({target}) => {
         const confirming = target.classList.contains('selected');
 
         this.setState({
-          confirming: confirming ? false : 'confirmRS',
-          currentBarName: confirming ? (this.state.isWin ? 'win' : 'nbr') : 'confirmRS',
+          currentBar: confirming ? (this.state.isWin ? Bars.WIN : Bars.NBR) : Bars.CONFIRM_RS,
         });
       },
 
       handleRSReject: () => {
         this.setState({
-          confirming: false,
-          currentBarName: this.state.isWin ? 'win' : 'nbr',
+          currentBar: this.state.isWin ? Bars.WIN : Bars.NBR,
         });
       },
 
-      handleSelectNbr: (nbr) => {
+      handleSelectNbr: nbr => {
         this.setState({selectedNbr: this.state.selectedNbr === nbr ? 0 : nbr});
       },
 
@@ -303,9 +306,10 @@ export class Game extends React.Component {
         this.setState({
           field,
           nbrsAmount: Game.countNbrs(field),
-          confirming: false,
           isWin: false,
-          currentBarName: 'nbr',
+          currentBar: Bars.NBR,
+          canRedo: false,
+          canUndo: false,
         });
       },
 
@@ -313,9 +317,10 @@ export class Game extends React.Component {
         this.setState({
           field: Game.cloneField(this.initialField),
           nbrsAmount: Game.countNbrs(this.initialField),
-          confirming: false,
           isWin: false,
-          currentBarName: 'nbr',
+          currentBar: Bars.NBR,
+          canRedo: false,
+          canUndo: false,
         });
 
         this.changesList = new ChangesList();
@@ -352,7 +357,7 @@ export class Game extends React.Component {
         this.setState({
           isWin: true,
           selectedNbr: 0,
-          currentBarName: 'win',
+          currentBar: Bars.WIN,
         });
       },
     };
@@ -535,13 +540,13 @@ export class Game extends React.Component {
           nbrsAmount={this.state.nbrsAmount}
           selectedNbr={this.state.selectedNbr}
           gameTime={this.state.gameTime}
-          currentBarName={this.state.currentBarName}
+          currentBar={this.state.currentBar}
           difficultyNames={this.difficultyNames}
           difficulty={this.difficulty}
           handlers={this.handlers}
         />
         <ControlBar
-          confirming={this.state.confirming}
+          currentBar={this.state.currentBar}
           isPencil={this.state.isPencil}
           canUndo={this.state.canUndo}
           canRedo={this.state.canRedo}
@@ -550,5 +555,66 @@ export class Game extends React.Component {
         />
       </div>
     );
+  }
+}
+
+class Changes {
+  constructor() {
+    this.valMap = new Map();
+    this.prev = null;
+    this.next = null;
+  }
+
+  /**
+   * Add value change to current move.
+   *
+   * @param {Number} x : integer of range [0,8]
+   * @param {Number} y : integer of range [0,8]
+   * @param {Number || Array} oldValue : could be number [1,9] or array of numbers [1,9]
+   * @param {Number || Array} newValue : could be number [1,9] or array of numbers [1,9]
+   */
+  add(x, y, oldValue, newValue) {
+    this.valMap.set([x, y], [oldValue, newValue]);
+  }
+}
+
+class ChangesList {
+  constructor() {
+    this.current = new Changes();
+    this.head = this.current;
+  }
+
+  /**
+   * 
+   * @param {Changes} changes 
+   */
+  addChanges(changes) {
+    this.current.next = changes;
+    changes.prev = this.current;
+    this.current = changes;
+  }
+
+  canUndo() {
+    return this.current !== this.head;
+  }
+
+  prevChanges() {
+    const lastChanges = this.current;
+
+    this.current = this.current.prev;
+    return lastChanges;
+  }
+
+  lastChanges() {
+    return this.current;
+  }
+
+  canRedo() {
+    return this.current.next !== null;
+  }
+
+  nextChanges() {
+    this.current = this.current.next;
+    return this.current;
   }
 }

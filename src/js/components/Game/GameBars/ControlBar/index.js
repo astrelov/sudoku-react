@@ -4,43 +4,44 @@ import {Image} from '../../../Image/index';
 import {GameClock} from '../../GameClock/index';
 import style from './index.module.css';
 import {Text} from '../../../Text';
+import {Bars} from '../../../Game/index'
 
-export const ControlBar = ({isPencil, confirming, canUndo, canRedo, gameTime, handlers}) => {
+export const ControlBar = ({isPencil, currentBar, canUndo, canRedo, gameTime, handlers}) => {
   const {handleNGConfirm, handleRSConfirm, handlePencilChange, handleUndo, handleRedo} = handlers;
 
   return (
     <div className={style.component}>
-      <GameClock classNames={['control-btn', 'game-bar-btn']} time={gameTime}/>
+      <GameClock classNames={[style.componentBtn]} time={gameTime}/>
 
       <Button
-        classNames={['control-btn', 'game-bar-btn']}
-        isSelected={confirming === 'confirmNG'}
+        classNames={[style.componentBtn]}
+        isSelected={currentBar === Bars.CONFIRM_NG}
         handleClick={handleNGConfirm}
       >
         <Text classNames={['no-events']}>New Game</Text>
       </Button>
 
       <Button
-        classNames={['control-btn', 'game-bar-btn']}
-        isSelected={confirming === 'confirmRS'}
+        classNames={[style.componentBtn]}
+        isSelected={currentBar === Bars.CONFIRM_RS}
         handleClick={handleRSConfirm}
       >
         <Image src="/img/controls/restart.svg" classNames={['no-events']}/>
       </Button>
 
       <Button
-        classNames={['control-btn', 'game-bar-btn']}
+        classNames={[style.componentBtn]}
         isSelected={isPencil}
         handleClick={handlePencilChange}
       >
         <Image src="/img/controls/pencil.svg" classNames={['no-events']}/>
       </Button>
 
-      <Button classNames={['control-btn', 'game-bar-btn', canUndo ? '' : 'disabled']} handleClick={handleUndo}>
+      <Button classNames={[style.componentBtn]} disabled={!canUndo} handleClick={handleUndo}>
         <Image src="/img/controls/undo.svg" classNames={['no-events']}/>
       </Button>
 
-      <Button classNames={['control-btn', 'game-bar-btn', canRedo ? '' : 'disabled']} handleClick={handleRedo}>
+      <Button classNames={[style.componentBtn]} disabled={!canRedo} handleClick={handleRedo}>
         <Image src="/img/controls/redo.svg" classNames={['no-events']}/>
       </Button>
     </div>
