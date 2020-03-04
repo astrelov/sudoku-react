@@ -1,6 +1,7 @@
 import React from 'react';
-import {Button} from '../../../../Button/index';
+import {noEvents} from '../../../../../../index.module.css'
 import style from './index.module.css';
+import {Button} from '../../../../Button/index';
 import {Image} from '../../../../Image/index';
 import {Text} from '../../../../Text';
 
@@ -12,17 +13,17 @@ export const ConfirmNGBar = ({handlers, difficultyNames}) => {
     buttons.push(
       <Button
         key={dfclty.toString()}
-        classNames={['confirm-btn']}
+        classNames={[style.btn]}
         handleClick={e => handleNG(dfclty, e)}
       >
-        <Text classNames={['no-events']}>{difficultyNames[dfclty]}</Text>
+        <Text classNames={[noEvents]}>{difficultyNames[dfclty]}</Text>
       </Button>
     );
   }
 
   buttons.push(
-    <Button key={'5'} classNames={['confirm-btn']} handleClick={handleNGReject}>
-      <Image src={'img/controls/cancel.svg'} classNames={['no-events']}/>
+    <Button key={'5'} classNames={[style.btn]} handleClick={handleNGReject}>
+      <Image src={'img/controls/cancel.svg'} classNames={[noEvents, style.btnImg]}/>
     </Button>
   );
 

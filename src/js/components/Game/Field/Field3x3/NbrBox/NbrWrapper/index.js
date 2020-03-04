@@ -1,4 +1,5 @@
 import React from 'react';
+import {selected} from '../../../../../../../index.module.css'
 import style from './index.module.css';
 import {Text} from '../../../../../Text';
 
@@ -11,7 +12,7 @@ export const NbrWrapper = ({x, y, fieldModel, initialFieldModel, selectedNbr}) =
 
     selectedNbr &&
     (value === selectedNbr || (Array.isArray(value) && value.includes(selectedNbr))) &&
-    classes.push('selected');
+    classes.push(selected);
 
     return classes;
   }

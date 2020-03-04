@@ -1,12 +1,13 @@
 import React from 'react';
-import {NbrWrapper} from './NbrWrapper';
+import {noEvents} from '../../../../../../index.module.css'
 import style from './index.module.css';
+import {NbrWrapper} from './NbrWrapper';
 
 export const NbrBox = ({x, y, fieldModel, initialFieldModel, selectedNbr, handlers}) => {
   const {handleInput} = handlers;
   const boxClasses = [style.component];
 
-  initialFieldModel[x][y] && boxClasses.push('no-events');
+  initialFieldModel[x][y] && boxClasses.push(noEvents);
 
   return (
     <div className={boxClasses.join(' ')} onClick={() => handleInput(x, y)}>

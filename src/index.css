@@ -14,14 +14,6 @@ img {
     display: block;
 }
 
-.no-events {
-    pointer-events: none;
-}
-
-.selected {
-    background-color: rgba(200, 68, 0, 0.7) !important;
-}
-
 @media (max-width: 400px) {
     :root {
         font-size: 8px;

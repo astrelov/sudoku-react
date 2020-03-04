@@ -1,0 +1,7 @@
+.noEvents {
+  pointer-events: none;
+}
+
+.selected {
+  background-color: rgba(200, 68, 0, 0.7) !important;
+}

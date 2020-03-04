@@ -8,12 +8,12 @@
     justify-content: center;
 }
 
-.component button img {
+.btnImg {
     width: 75%;
     height: 75%;
 }
 
-.component button {
+.btn {
     width: 7vmin;
     min-width: 25px;
     height: 7vmin;
@@ -31,12 +31,12 @@
     margin-right: 2%;
 }
 
-.component button:hover {
+.btn:hover {
     border-width: 2px;
     border-color: rgba(245, 222, 179, 0.5);
     cursor: pointer;
 }
 
-.component button:focus {
+.btn:focus {
     outline: none;
 }
