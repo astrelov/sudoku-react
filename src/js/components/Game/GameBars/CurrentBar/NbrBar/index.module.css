@@ -8,7 +8,7 @@
     justify-content: space-evenly;
 }
 
-.button {
+.btn {
     width: 7vmin;
     min-width: 25px;
     height: 7vmin;
@@ -25,13 +25,13 @@
     align-items: center;
 }
 
-.button:hover {
+.btn:hover {
     border-width: 2px;
     border-color: rgba(245, 222, 179, 0.5);
     cursor: pointer;
 }
 
-.button:focus {
+.btn:focus {
     outline: none;
 }
 

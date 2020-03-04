@@ -8,7 +8,7 @@
     justify-content: space-evenly;
 }
 
-.componentBtn {
+.btn {
     width: 7vmin;
     min-width: 25px;
     height: 7vmin;
@@ -21,12 +21,12 @@
     border-color: rgba(245, 245, 220, 0.3);
 }
 
-.componentBtn:hover {
+.btn:hover {
     border-width: 2px;
     border-color: rgba(245, 222, 179, 0.5);
     cursor: pointer;
 }
 
-.componentBtn:focus {
+.btn:focus {
     outline: none;
 }

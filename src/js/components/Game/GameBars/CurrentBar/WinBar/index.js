@@ -2,7 +2,6 @@ import React from 'react';
 import style from './index.module.css';
 import {Text} from '../../../../Text';
 
-// time in seconds
 export const WinBar = ({gameTime, difficulty}) => {
   const minutes = Math.floor(gameTime / 60);
   const seconds = gameTime % 60;

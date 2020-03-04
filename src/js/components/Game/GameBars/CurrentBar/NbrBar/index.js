@@ -9,19 +9,19 @@ export const NbrBar = ({nbrsAmount, selectedNbr, handlers}) => {
   let buttons = [];
 
   for (let nbr = 1; nbr <= 9; nbr++) {
-    const nbrAmountToFill = (9 - nbrsAmount[nbr]) < 0 ? '+' + (nbrsAmount[nbr] - 9) : (9 - nbrsAmount[nbr]);
-    const btnClasses = [style.button];
+    const nbrAmountToFill = (9 - nbrsAmount[nbr]) < 0 ? '+' + (nbrsAmount[nbr] - 9) : (9 - nbrsAmount[nbr]) || '';
+    const classes = [style.btn];
 
-    selectedNbr === nbr && btnClasses.push(selected);
+    selectedNbr === nbr && classes.push(selected);
 
     buttons.push(
       <Button
-        key={nbr.toString()}
-        classNames={btnClasses}
+        classNames={classes}
         handleClick={e => handleSelectNbr(nbr, e)}
+        key={nbr.toString()}
       >
         <Text classNames={[style.nbr]}>{nbr}</Text>
-        <Text classNames={[style.pnclNbr]}>{nbrAmountToFill ? nbrAmountToFill : ''}</Text>
+        <Text classNames={[style.pnclNbr]}>{nbrAmountToFill}</Text>
       </Button>
     );
   }

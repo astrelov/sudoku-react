@@ -18,7 +18,7 @@ export class Game extends React.Component {
     this.difficultyNames = props.difficultyNames || ['1', '2', '3', '4', '5'];
     this.difficulty = props.difficulty || 0;
 
-    const field = this.generateField();
+    const field = Game.generateField(this.difficulty);
     this.initialField = Game.cloneField(field);
     this.changesList = new ChangesList();
     this.setGameClock();
@@ -39,7 +39,7 @@ export class Game extends React.Component {
         this.setState({isPencil: !this.state.isPencil});
       },
 
-      handleNGConfirm: (confirming) => {
+      handleNGConfirm: confirming => {
         this.setState({
           currentBar: confirming ? (this.state.isWin ? Bars.WIN : Bars.NBR) : Bars.CONFIRM_NG,
         });
@@ -51,7 +51,7 @@ export class Game extends React.Component {
         });
       },
 
-      handleRSConfirm: (confirming) => {
+      handleRSConfirm: confirming => {
         this.setState({
           currentBar: confirming ? (this.state.isWin ? Bars.WIN : Bars.NBR) : Bars.CONFIRM_RS,
         });
@@ -69,12 +69,12 @@ export class Game extends React.Component {
 
       handleInput: (x, y) => {
         // returns boolean for update status
-        function updateValueAt(x, y, field = this.state.field, number = this.state.selectedNbr) {
+        function updateValueAt(x, y, field, number) {
           function clearPencilRow(
             y,
             changes,
-            field = this.state.field,
-            number = this.state.selectedNbr
+            field,
+            number
           ) {
             let oldValue;
             let newValue;
@@ -92,8 +92,8 @@ export class Game extends React.Component {
           function clearPencilCol(
             x,
             changes,
-            field = this.state.field,
-            number = this.state.selectedNbr
+            field,
+            number
           ) {
             let oldValue;
             let newValue;
@@ -112,8 +112,8 @@ export class Game extends React.Component {
             _x,
             _y,
             changes,
-            field = this.state.field,
-            number = this.state.selectedNbr
+            field,
+            number
           ) {
             function getStartCoordOf3x3(numX, numY) {
               let start3x3X;
@@ -146,7 +146,7 @@ export class Game extends React.Component {
             }
           }
 
-          function inputPencilVal(x, y, field = this.state.field, number = this.state.selectedNbr) {
+          function inputPencilVal(x, y, field, number) {
             // if there is no array of pencil numbers => create it
             if (!Array.isArray(field[x][y])) {
               field[x][y] = [];
@@ -162,7 +162,7 @@ export class Game extends React.Component {
             }
           }
 
-          function inputNbrVal(x, y, field = this.state.field, number = this.state.selectedNbr) {
+          function inputNbrVal(x, y, field, number) {
             // new number => fill it
             if (number !== field[x][y]) {
               field[x][y] = number;
@@ -271,7 +271,7 @@ export class Game extends React.Component {
           );
         }
 
-        if (updateValueAt.call(this, x, y)) {
+        if (updateValueAt.call(this, x, y, this.state.field, this.state.selectedNbr)) {
           this.setState({
             field: this.state.field,
             nbrsAmount: this.state.nbrsAmount,
@@ -290,7 +290,7 @@ export class Game extends React.Component {
         this.setGameClock();
 
         this.difficulty = difficulty;
-        const field = this.generateField();
+        const field = Game.generateField(this.difficulty);
         this.initialField = Game.cloneField(field);
         this.changesList = new ChangesList();
 
@@ -321,7 +321,13 @@ export class Game extends React.Component {
         if (this.changesList.canUndo()) {
           const prevChanges = this.changesList.prevChanges();
 
-          prevChanges.valMap.forEach(([oldValue], [x, y]) => this.updateValueAt(x, y, oldValue));
+          prevChanges.valMap.forEach(([oldValue], [x, y]) => Game.updateValueAt(
+            x,
+            y,
+            oldValue,
+            this.state.field,
+            this.state.nbrsAmount
+          ));
           this.setState({
             field: this.state.field, nbrsAmount: this.state.nbrsAmount,
             canUndo: this.changesList.canUndo(),
@@ -334,7 +340,13 @@ export class Game extends React.Component {
         if (this.changesList.canRedo()) {
           const nextChanges = this.changesList.nextChanges();
 
-          nextChanges.valMap.forEach(([, newValue], [x, y]) => this.updateValueAt(x, y, newValue));
+          nextChanges.valMap.forEach(([, newValue], [x, y]) => Game.updateValueAt(
+            x,
+            y,
+            newValue,
+            this.state.field,
+            this.state.nbrsAmount
+          ));
           this.setState({
             field: this.state.field, nbrsAmount: this.state.nbrsAmount,
             canUndo: this.changesList.canUndo(),
@@ -375,7 +387,7 @@ export class Game extends React.Component {
     return filledAmount;
   }
 
-  generateField(difficulty = this.difficulty) {
+  static generateField(difficulty) {
     function generateEmptyField() {
       const field = [];
 
@@ -490,14 +502,13 @@ export class Game extends React.Component {
     return field;
   }
 
-  // updates without setState() call
-  updateValueAt(x, y, value, field = this.state.field, nbrsAmount = this.state.nbrsAmount) {
-    if (!Array.isArray(this.state.field[x][y])) {
-      nbrsAmount[this.state.field[x][y]]--;
+  static updateValueAt(x, y, value, field, nbrsAmount) {
+    if (!Array.isArray(field[x][y])) {
+      nbrsAmount[field[x][y]]--;
     }
     field[x][y] = value;
-    if (!Array.isArray(this.state.field[x][y])) {
-      nbrsAmount[this.state.field[x][y]]++;
+    if (!Array.isArray(field[x][y])) {
+      nbrsAmount[field[x][y]]++;
     }
   }
 

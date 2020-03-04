@@ -1,5 +1,5 @@
 import React from 'react';
 
-export const Image = ({src, classNames = []}) => {
-  return <img alt="" src={src} className={classNames.join(' ')}/>;
+export const Image = ({src, classNames = [], alt = ''}) => {
+  return <img alt={alt} src={src} className={classNames.join(' ')}/>;
 };

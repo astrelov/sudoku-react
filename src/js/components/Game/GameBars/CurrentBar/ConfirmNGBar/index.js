@@ -9,20 +9,20 @@ export const ConfirmNGBar = ({handlers, difficultyNames}) => {
   let {handleNG, handleNGReject} = handlers;
   let buttons = [];
 
-  for (let dfclty = 0; dfclty < 5; dfclty++) {
+  for (let difficulty = 0; difficulty < 5; difficulty++) {
     buttons.push(
       <Button
-        key={dfclty.toString()}
         classNames={[style.btn]}
-        handleClick={e => handleNG(dfclty, e)}
+        handleClick={e => handleNG(difficulty, e)}
+        key={difficulty.toString()}
       >
-        <Text classNames={[noEvents]}>{difficultyNames[dfclty]}</Text>
+        <Text classNames={[noEvents]}>{difficultyNames[difficulty]}</Text>
       </Button>
     );
   }
 
   buttons.push(
-    <Button key={'5'} classNames={[style.btn]} handleClick={handleNGReject}>
+    <Button classNames={[style.btn]} handleClick={handleNGReject} key={'5'}>
       <Image src={'img/controls/cancel.svg'} classNames={[noEvents, style.btnImg]}/>
     </Button>
   );
