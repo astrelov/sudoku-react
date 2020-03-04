@@ -16,7 +16,7 @@ export const ControlBar = ({isPencil, currentBar, canUndo, canRedo, gameTime, ha
       <Button
         classNames={[style.componentBtn]}
         isSelected={currentBar === Bars.CONFIRM_NG}
-        handleClick={handleNGConfirm}
+        handleClick={({target}) => handleNGConfirm(target.classList.contains('selected'))}
       >
         <Text classNames={['no-events']}>New Game</Text>
       </Button>
@@ -24,7 +24,7 @@ export const ControlBar = ({isPencil, currentBar, canUndo, canRedo, gameTime, ha
       <Button
         classNames={[style.componentBtn]}
         isSelected={currentBar === Bars.CONFIRM_RS}
-        handleClick={handleRSConfirm}
+        handleClick={({target}) => handleRSConfirm(target.classList.contains('selected'))}
       >
         <Image src="/img/controls/restart.svg" classNames={['no-events']}/>
       </Button>

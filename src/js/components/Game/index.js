@@ -35,17 +35,11 @@ export class Game extends React.Component {
     };
 
     this.handlers = {
-      // TODO refactor to get only boolean, not {target}
-      handlePencilChange: ({target}) => {
-        const isSelected = target.classList.contains('selected');
-
-        this.setState({isPencil: !isSelected});
+      handlePencilChange: () => {
+        this.setState({isPencil: !this.state.isPencil});
       },
 
-      // TODO refactor to get only boolean, not {target}
-      handleNGConfirm: ({target}) => {
-        const confirming = target.classList.contains('selected');
-
+      handleNGConfirm: (confirming) => {
         this.setState({
           currentBar: confirming ? (this.state.isWin ? Bars.WIN : Bars.NBR) : Bars.CONFIRM_NG,
         });
@@ -57,10 +51,7 @@ export class Game extends React.Component {
         });
       },
 
-      // TODO refactor to get only boolean, not {target}
-      handleRSConfirm: ({target}) => {
-        const confirming = target.classList.contains('selected');
-
+      handleRSConfirm: (confirming) => {
         this.setState({
           currentBar: confirming ? (this.state.isWin ? Bars.WIN : Bars.NBR) : Bars.CONFIRM_RS,
         });
