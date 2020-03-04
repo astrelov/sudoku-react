@@ -26,3 +26,9 @@ img {
 .selected {
     background-color: rgba(200, 68, 0, 0.7) !important;
 }
+
+@media (max-width: 350px) {
+    :root {
+        font-size: 8px;
+    }
+}

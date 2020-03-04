@@ -25,7 +25,7 @@ export const ControlBar = ({isPencil, confirming, canUndo, canRedo, gameTime, ha
         isSelected={confirming === 'confirmRS'}
         handleClick={handleRSConfirm}
       >
-        <Image src="/img/controls/restart_c8c8c8.png" classNames={['no-events']}/>
+        <Image src="/img/controls/restart.svg" classNames={['no-events']}/>
       </Button>
 
       <Button
@@ -33,15 +33,15 @@ export const ControlBar = ({isPencil, confirming, canUndo, canRedo, gameTime, ha
         isSelected={isPencil}
         handleClick={handlePencilChange}
       >
-        <Image src="/img/controls/pencil_c8c8c8.png" classNames={['no-events']}/>
+        <Image src="/img/controls/pencil.svg" classNames={['no-events']}/>
       </Button>
 
       <Button classNames={['control-btn', 'game-bar-btn', canUndo ? '' : 'disabled']} handleClick={handleUndo}>
-        <Image src="/img/controls/undo_c8c8c8.png" classNames={['no-events']}/>
+        <Image src="/img/controls/undo.svg" classNames={['no-events']}/>
       </Button>
 
       <Button classNames={['control-btn', 'game-bar-btn', canRedo ? '' : 'disabled']} handleClick={handleRedo}>
-        <Image src="/img/controls/redo_c8c8c8.png" classNames={['no-events']}/>
+        <Image src="/img/controls/redo.svg" classNames={['no-events']}/>
       </Button>
     </div>
   );

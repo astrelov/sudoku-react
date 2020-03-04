@@ -1,6 +1,7 @@
 import React from 'react';
 import {Button} from '../../../../Button/index';
 import style from './index.module.css';
+import {Image} from '../../../../Image/index';
 import {Text} from '../../../../Text';
 
 export const ConfirmNGBar = ({handlers, difficultyNames}) => {
@@ -21,7 +22,7 @@ export const ConfirmNGBar = ({handlers, difficultyNames}) => {
 
   buttons.push(
     <Button key={'5'} classNames={['confirm-btn', 'game-bar-btn']} handleClick={handleNGReject}>
-      <Text classNames={['no-events']}>X</Text>
+      <Image src={'img/controls/cancel.svg'} classNames={['no-events']}/>
     </Button>
   );
 
