@@ -1,8 +1,8 @@
 import React from 'react';
-import {selected} from '../../../../../../index.module.css'
+import {selected} from '../../../../../App/index.module.css'
 import style from './index.module.css';
-import {Button} from '../../../../Button/index';
-import {Text} from '../../../../Text';
+import {Button} from '../../../../../Button';
+import {Text} from '../../../../../Text';
 
 export const NbrBar = ({nbrsAmount, selectedNbr, handlers}) => {
   let {handleSelectNbr} = handlers;

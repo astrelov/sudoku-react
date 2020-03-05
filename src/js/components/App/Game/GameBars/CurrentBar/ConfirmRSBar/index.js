@@ -1,8 +1,8 @@
 import React from 'react';
-import {noEvents} from '../../../../../../index.module.css'
+import {noEvents} from '../../../../../App/index.module.css'
 import style from './index.module.css';
-import {Button} from '../../../../Button/index';
-import {Image} from '../../../../Image/index';
+import {Button} from '../../../../../Button';
+import {Image} from '../../../../../Image';
 
 export const ConfirmRSBar = ({handlers}) => {
   const {handleRS, handleRSReject} = handlers;

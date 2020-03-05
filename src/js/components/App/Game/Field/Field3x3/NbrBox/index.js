@@ -1,5 +1,5 @@
 import React from 'react';
-import {noEvents} from '../../../../../../index.module.css'
+import {noEvents} from '../../../../../App/index.module.css'
 import style from './index.module.css';
 import {NbrWrapper} from './NbrWrapper';
 

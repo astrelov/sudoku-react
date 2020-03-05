@@ -1,9 +1,9 @@
 import React from 'react';
-import {noEvents} from '../../../../../../index.module.css'
+import {noEvents} from '../../../../../App/index.module.css'
 import style from './index.module.css';
-import {Button} from '../../../../Button/index';
-import {Image} from '../../../../Image/index';
-import {Text} from '../../../../Text';
+import {Button} from '../../../../../Button';
+import {Image} from '../../../../../Image';
+import {Text} from '../../../../../Text';
 
 export const ConfirmNGBar = ({handlers, difficultyNames}) => {
   let {handleNG, handleNGReject} = handlers;

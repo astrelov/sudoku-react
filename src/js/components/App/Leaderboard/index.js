@@ -1,6 +1,6 @@
 import React from 'react';
-import {Button} from '../Button/index';
 import style from './index.module.css';
+import {Button} from '../../Button';
 
 export class Leaderboard extends React.Component {
   constructor(props) {

@@ -1,11 +1,11 @@
 import React from 'react';
-import {selected, noEvents} from '../../../../../index.module.css';
+import {selected, noEvents} from '../../../../App/index.module.css';
 import style from './index.module.css';
-import {Button} from '../../../Button/index';
-import {Image} from '../../../Image/index';
-import {GameClock} from './GameClock/index';
-import {Text} from '../../../Text';
-import {Bars} from '../../../Game/index'
+import {Button} from '../../../../Button';
+import {Image} from '../../../../Image';
+import {GameClock} from './GameClock';
+import {Text} from '../../../../Text';
+import {Bars} from '../../../Game'
 
 export const ControlBar = ({isPencil, currentBar, canUndo, canRedo, gameTime, handlers}) => {
   const {handleNGConfirm, handleRSConfirm, handlePencilChange, handleUndo, handleRedo} = handlers;

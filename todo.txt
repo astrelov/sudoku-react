@@ -6,12 +6,12 @@ TODO:
 - add posibility to input numbers with corresponding keys
 - add posibility to toggle pencil with some key
 - add posibility to erase value cursor is pointing with some key
-- make new images for difficulty selection / restart confirmation
-- on win make field unclickable
 - move bars to sides on wide viewport (width > 120% height or something like this)
 
 DONE:
 
+- on win make field unclickable
+- make new images for difficulty selection / restart confirmation
 - empty initial html container
 - make container a grid to contain field and 2 game bars
 - feature: game difficulty selection

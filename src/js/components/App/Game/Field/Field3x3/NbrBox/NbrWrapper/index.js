@@ -1,7 +1,7 @@
 import React from 'react';
-import {selected} from '../../../../../../../index.module.css'
+import {selected} from '../../../../../../App/index.module.css'
 import style from './index.module.css';
-import {Text} from '../../../../../Text';
+import {Text} from '../../../../../../Text';
 
 export const NbrWrapper = ({x, y, fieldModel, isInitial, selectedNbr}) => {
   function getWrapperClasses(value, selectedNbr, isInitial) {

@@ -3,7 +3,7 @@ import {WinBar} from './WinBar';
 import {NbrBar} from './NbrBar';
 import {ConfirmNGBar} from './ConfirmNGBar';
 import {ConfirmRSBar} from './ConfirmRSBar';
-import {Bars} from '../../../Game/index'
+import {Bars} from '../../../Game'
 
 export const CurrentBar = ({
                              nbrsAmount,
