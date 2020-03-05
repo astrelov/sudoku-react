@@ -1,6 +1,5 @@
 import React from 'react';
 import style from './index.module.css';
-import {Button} from '../../Button';
 
 export class Leaderboard extends React.Component {
   constructor(props) {
@@ -54,8 +53,8 @@ export class Leaderboard extends React.Component {
           </li>
         </ul>
         <div id="lb-control-bar">
-          <Button>new game</Button>
-          <Button>continue</Button>
+          <button>new game</button>
+          <button>continue</button>
         </div>
       </div>
     );

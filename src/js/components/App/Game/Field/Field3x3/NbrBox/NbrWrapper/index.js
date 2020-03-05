@@ -1,7 +1,6 @@
 import React from 'react';
-import {selected} from '../../../../../../App/index.module.css'
+import {selected, text} from '../../../../../../App/index.module.css'
 import style from './index.module.css';
-import {Text} from '../../../../../../Text';
 
 export const NbrWrapper = ({x, y, fieldModel, isInitial, selectedNbr}) => {
   function getWrapperClasses(value, selectedNbr, isInitial) {
@@ -20,15 +19,15 @@ export const NbrWrapper = ({x, y, fieldModel, isInitial, selectedNbr}) => {
 
     isInitial && classes.push(style.initialNbr);
 
-    return <Text
-      classNames={classes}>{value}</Text>;
+    return <div
+      className={classes.join(' ')}>{value}</div>;
   }
 
   function getPnclNbrs(value) {
     const nbrs = [];
 
     value.forEach(nbr => {
-      nbrs.push(<Text classNames={[style.pnclVal]} key={nbr.toString()}>{nbr}</Text>);
+      nbrs.push(<div className={[style.pnclVal, text].join(' ')} key={nbr.toString()}>{nbr}</div>);
     });
 
     return nbrs;

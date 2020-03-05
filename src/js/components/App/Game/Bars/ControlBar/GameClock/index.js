@@ -1,6 +1,5 @@
 import React from 'react';
-import {Button} from '../../../../../Button';
-import {Text} from '../../../../../Text';
+import {text} from '../../../../../App/index.module.css'
 
 export const GameClock = ({classNames = [], time = 0}) => {
   const minutes = Math.floor(time / 60);
@@ -12,8 +11,8 @@ export const GameClock = ({classNames = [], time = 0}) => {
   if (seconds || !minutes) timeStr += seconds + 's';
 
   return (
-    <Button classNames={classNames}>
-      <Text>{timeStr}</Text>
-    </Button>
+    <button className={classNames.join(' ')}>
+      <div className={text}>{timeStr}</div>
+    </button>
   );
 };

@@ -1,51 +1,50 @@
-import React from 'react';
-import {selected, noEvents} from '../../../../App/index.module.css';
-import {bar, btn} from '../../Bars/index.module.css'
-import style from './index.module.css';
-import {Button} from '../../../../Button';
-import {Image} from '../../../../Image';
-import {GameClock} from './GameClock';
-import {Text} from '../../../../Text';
-import {Bars} from '../../../Game'
+import React from 'react'
+import { selected, noEvents, text, disabled } from '../../../../App/index.module.css'
+import { bar, btn } from '../../Bars/index.module.css'
+import style from './index.module.css'
+import { GameClock } from './GameClock'
+import { Bars } from '../../../Game'
 
-export const ControlBar = ({isPencil, currentBar, canUndo, canRedo, gameTime, handlers}) => {
-  const {handleNGConfirm, handleRSConfirm, handlePencilChange, handleUndo, handleRedo} = handlers;
+export const ControlBar = ({ isPencil, currentBar, canUndo, canRedo, gameTime, handlers }) => {
+  const { handleNGConfirm, handleRSConfirm, handlePencilChange, handleUndo, handleRedo } = handlers
 
   return (
     <div className={[style.component, bar].join(' ')}>
-      <GameClock classNames={[btn]} time={gameTime}/>
+      <GameClock classNames={[btn]} time={gameTime} />
 
-      <Button
-        classNames={[btn]}
-        isSelected={currentBar === Bars.CONFIRM_NG}
-        handleClick={({target}) => handleNGConfirm(target.classList.contains(selected))}
+      <button
+        className={[btn, (currentBar === Bars.CONFIRM_NG) ? selected : ''].join(' ')}
+        onClick={({ target }) => handleNGConfirm(target.classList.contains(selected))}
       >
-        <Text classNames={[noEvents]}>New Game</Text>
-      </Button>
+        <div className={text}>New Game</div>
+      </button>
 
-      <Button
-        classNames={[btn]}
-        isSelected={currentBar === Bars.CONFIRM_RS}
-        handleClick={({target}) => handleRSConfirm(target.classList.contains(selected))}
+      <button
+        className={[btn, (currentBar === Bars.CONFIRM_RS) ? selected : ''].join(' ')}
+        onClick={({ target }) => handleRSConfirm(target.classList.contains(selected))}
       >
-        <Image src="/img/controls/restart.svg" classNames={[noEvents]}/>
-      </Button>
+        <svg className={noEvents}>
+          <use xlinkHref="./index.svg#restart"/>
+        </svg>
+      </button>
 
-      <Button
-        classNames={[btn]}
-        isSelected={isPencil}
-        handleClick={handlePencilChange}
-      >
-        <Image src="/img/controls/pencil.svg" classNames={[noEvents]}/>
-      </Button>
+      <button className={[btn, (isPencil ? selected : '')].join(' ')} onClick={handlePencilChange}>
+        <svg className={noEvents}>
+          <use xlinkHref="./index.svg#pencil"/>
+        </svg>
+      </button>
 
-      <Button classNames={[btn]} disabled={!canUndo} handleClick={handleUndo}>
-        <Image src="/img/controls/undo.svg" classNames={[noEvents]}/>
-      </Button>
+      <button className={[btn, (canUndo ? '' : disabled)].join(' ')} onClick={handleUndo}>
+        <svg className={noEvents}>
+          <use xlinkHref="./index.svg#undo"/>
+        </svg>
+      </button>
 
-      <Button classNames={[btn]} disabled={!canRedo} handleClick={handleRedo}>
-        <Image src="/img/controls/redo.svg" classNames={[noEvents]}/>
-      </Button>
+      <button className={[btn, (canRedo ? '' : disabled)].join(' ')} onClick={handleRedo}>
+        <svg className={noEvents}>
+          <use xlinkHref="./index.svg#redo" />
+        </svg>
+      </button>
     </div>
-  );
-};
+  )
+}

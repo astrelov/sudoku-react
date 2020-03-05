@@ -1,12 +1,10 @@
 import React from 'react';
-import {selected} from '../../../../../App/index.module.css'
+import {selected, text} from '../../../../../App/index.module.css'
 import {bar, btn} from '../../../Bars/index.module.css'
 import style from './index.module.css';
-import {Button} from '../../../../../Button';
-import {Text} from '../../../../../Text';
 
 export const NbrBar = ({nbrsAmount, selectedNbr, handlers}) => {
-  let {handleSelectNbr} = handlers;
+  const {handleSelectNbr} = handlers;
   let buttons = [];
 
   for (let nbr = 1; nbr <= 9; nbr++) {
@@ -16,14 +14,14 @@ export const NbrBar = ({nbrsAmount, selectedNbr, handlers}) => {
     selectedNbr === nbr && classes.push(selected);
 
     buttons.push(
-      <Button
-        classNames={classes}
-        handleClick={e => handleSelectNbr(nbr, e)}
+      <button
+        className={classes.join(' ')}
+        onClick={e => handleSelectNbr(nbr, e)} // TODO remove this event pass
         key={nbr.toString()}
       >
-        <Text classNames={[style.nbr]}>{nbr}</Text>
-        <Text classNames={[style.nbrAmount]}>{nbrAmountToFill}</Text>
-      </Button>
+        <div className={[style.nbr, text].join(' ')}>{nbr}</div>
+        <div className={[style.nbrAmount, text].join(' ')}>{nbrAmountToFill}</div>
+      </button>
     );
   }
 

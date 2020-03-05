@@ -1,31 +1,29 @@
 import React from 'react';
-import {noEvents} from '../../../../../App/index.module.css'
+import {noEvents, text} from '../../../../../App/index.module.css'
 import {bar, btn} from '../../../Bars/index.module.css'
 import style from './index.module.css';
-import {Button} from '../../../../../Button';
-import {Image} from '../../../../../Image';
-import {Text} from '../../../../../Text';
 
 export const ConfirmNGBar = ({handlers, difficultyNames}) => {
-  let {handleNG, handleNGReject} = handlers;
+  const { handleNG, handleNGReject } = handlers;
+  const btnClasses = [style.btn, btn].join(' ');
   let buttons = [];
 
   for (let difficulty = 0; difficulty < 5; difficulty++) {
     buttons.push(
-      <Button
-        classNames={[style.btn, btn]}
-        handleClick={e => handleNG(difficulty, e)}
+      <button
+        className={btnClasses}
+        onClick={e => handleNG(difficulty, e)}
         key={difficulty.toString()}
       >
-        <Text classNames={[noEvents]}>{difficultyNames[difficulty]}</Text>
-      </Button>
+        <div className={text}>{difficultyNames[difficulty]}</div>
+      </button>
     );
   }
 
   buttons.push(
-    <Button classNames={[style.btn, btn]} handleClick={handleNGReject} key={'5'}>
-      <Image src={'img/controls/cancel.svg'} classNames={[noEvents, style.btnImg]}/>
-    </Button>
+    <button className={btnClasses} onClick={handleNGReject} key={'5'}>
+      <svg className={[noEvents, style.btnImg].join(' ')}><use xlinkHref="./index.svg#cancel"/></svg>
+    </button>
   );
 
   return (

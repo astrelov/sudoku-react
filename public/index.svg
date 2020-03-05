@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <svg id="cancel" viewBox="0 0 12.7 12.7">
+    <path d="m 1.7925735,3.526 c 2.0058465,2.53414 5.0768572,4.88698 7.3233581,6.90882"
+          style="fill:none;stroke:#c8c8c8;stroke-width:0.4px;" />
+    <path d="m 2.253162,10.38876 c 3.1890425,-2.37188 5.8804756,-5.96277 8.613006,-8.19847"
+          style="fill:none;stroke:#c8c8c8;stroke-width:0.4px;" />
+  </svg>
+  <svg id="confirm" viewBox="0 0 12.7 12.7">
+    <path d="m 1.9670261,6.96569 c 1.0872676,0.64417 0.8053716,2.62456 1.5917772,3.41097 0.01008,0.008 0.734738,-1.97921 1.8191745,-3.60587 1.3049201,-1.95737 3.7968844,-3.63337 5.5874662,-4.67787"
+          style="fill:none;stroke:#c8c8c8;stroke-width:0.4px;" />
+  </svg>
+  <svg id="pencil" viewBox="0 0 12.7 12.7">
+    <path d="m 4.2618538,10.19392 6.0154612,-6.01546"
+          style="fill:none;stroke:#c8c8c8;stroke-width:0.37px;" />
+    <path d="m 8.4484391,2.34958 -6.0154614,6.01547"
+          style="fill:none;stroke:#c8c8c8;stroke-width:0.37px;" />
+    <path d="M 10.271811,4.42635 8.2005541,2.35509"
+          style="fill:none;stroke:#c8c8c8;stroke-width:0.37px;" />
+    <path d="m 2.4810055,10.30925 -8.679e-4,-2.04923 z"
+          style="fill:none;stroke:#c8c8c8;stroke-width:0.37px;" />
+    <path d="m 4.3757334,10.15196 -2.0456616,0.0128 z"
+          style="fill:none;stroke:#c8c8c8;stroke-width:0.37px;" />
+    <path d="M 10.598609,4.10808 8.5273515,2.03682"
+          style="fill:none;stroke:#c8c8c8;stroke-width:0.37px;" />
+    <path d="M 10.948583,3.76515 8.8773253,1.6939"
+          style="fill:none;stroke:#c8c8c8;stroke-width:0.37px;" />
+    <path d="m 10.344302,4.11434 0.61089,-0.60361 z"
+          style="fill:none;stroke:#c8c8c8;stroke-width:0.37px;" />
+    <path d="M 8.5197746,2.29224 9.130665,1.68862 Z"
+          style="fill:none;stroke:#c8c8c8;stroke-width:0.37px;" />
+  </svg>
+  <svg id="restart" viewBox="0 0 12.7 12.7">
+    <ellipse ry="4.8" rx="4.8" cy="6.2" cx="6.4" style="fill:none;stroke:#c8c8c8;stroke-width:0.25;" />
+    <ellipse ry="4.6" rx="4.6" cy="6.2" cx="6.4" style="fill:none;stroke:#c8c8c8;stroke-width:0.25;" />
+    <path d="M 9.0662862,1.2114515 7.6150007,3.0112202 10.407566,3.5003292 Z"
+          style="fill:#c8c8c8;stroke:#c8c8c8;stroke-width:0.05px;" />
+  </svg>
+  <svg id="redo" viewBox="0 0 12.7 12.7">
+    <path d="M 1.9895852,7.54062 C 4.6206938,5.11828 7.4991528,5.12426 10.694377,6.11187"
+          style="fill:none;stroke:#c8c8c8;stroke-width:0.3px" />
+    <path d="M 9.5566689,4.86833 C 9.6866904,5.0267 10.811044,6.16719 10.800211,6.17802 10.738561,6.23962 9.1297039,6.69156 8.9613564,6.73365"
+          style="fill:none;stroke:#c8c8c8;stroke-width:0.3px" />
+  </svg>
+  <svg id="undo" viewBox="0 0 12.7 12.7">
+    <path d="M 10.847917,7.54062 C 8.2168084,5.11828 5.3383494,5.12426 2.143125,6.11187"
+          style="fill:none;stroke:#c8c8c8;stroke-width:0.3px;"/>
+    <path d="m 3.2808333,4.86833 c -0.1300215,0.15837 -1.2543754,1.29886 -1.2435417,1.30969 0.06165,0.0616 1.6705067,0.51354 1.8388542,0.55563"
+          style="fill:none;stroke:#c8c8c8;stroke-width:0.3px;"/>
+  </svg>
+</svg>
