@@ -1,5 +1,5 @@
 import React from 'react';
-import {noEvents, text} from '../../../../../App/index.module.css'
+import {text} from '../../../../../App/index.module.css'
 import {bar, btn} from '../../../Bars/index.module.css'
 import style from './index.module.css';
 
@@ -22,7 +22,7 @@ export const ConfirmNGBar = ({handlers, difficultyNames}) => {
 
   buttons.push(
     <button className={btnClasses} onClick={handleNGReject} key={'5'}>
-      <svg className={[noEvents, style.btnImg].join(' ')}><use xlinkHref="./index.svg#cancel"/></svg>
+      <svg className={style.btnImg}><use xlinkHref="./index.svg#cancel"/></svg>
     </button>
   );
 

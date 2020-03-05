@@ -1,5 +1,5 @@
 import React from 'react'
-import { selected, noEvents, text, disabled } from '../../../../App/index.module.css'
+import { selected, text, disabled } from '../../../../App/index.module.css'
 import { bar, btn } from '../../Bars/index.module.css'
 import style from './index.module.css'
 import { GameClock } from './GameClock'
@@ -23,25 +23,25 @@ export const ControlBar = ({ isPencil, currentBar, canUndo, canRedo, gameTime, h
         className={[btn, (currentBar === Bars.CONFIRM_RS) ? selected : ''].join(' ')}
         onClick={handleRSClick}
       >
-        <svg className={noEvents}>
+        <svg>
           <use xlinkHref="./index.svg#restart"/>
         </svg>
       </button>
 
       <button className={[btn, (isPencil ? selected : '')].join(' ')} onClick={handlePencilChange}>
-        <svg className={noEvents}>
+        <svg>
           <use xlinkHref="./index.svg#pencil"/>
         </svg>
       </button>
 
       <button className={[btn, (canUndo ? '' : disabled)].join(' ')} onClick={handleUndo}>
-        <svg className={noEvents}>
+        <svg>
           <use xlinkHref="./index.svg#undo"/>
         </svg>
       </button>
 
       <button className={[btn, (canRedo ? '' : disabled)].join(' ')} onClick={handleRedo}>
-        <svg className={noEvents}>
+        <svg>
           <use xlinkHref="./index.svg#redo" />
         </svg>
       </button>
