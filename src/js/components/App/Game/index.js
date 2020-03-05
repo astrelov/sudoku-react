@@ -484,7 +484,7 @@ export class Game extends React.Component {
     }
 
     const field = generateSolvedField();
-    const difficultyNumbersOpen = [80, 58, 48, 40, 32, 24];
+    const difficultyNumbersOpen = [58, 48, 40, 32, 24];
     let x;
     let y;
     let filledBoxes = 81;
