@@ -6,7 +6,7 @@ import { GameClock } from './GameClock'
 import { Bars } from '../../../Game'
 
 export const ControlBar = ({ isPencil, currentBar, canUndo, canRedo, gameTime, handlers }) => {
-  const { handleNGConfirm, handleRSConfirm, handlePencilChange, handleUndo, handleRedo } = handlers
+  const { handleNGClick, handleRSClick, handlePencilChange, handleUndo, handleRedo } = handlers
 
   return (
     <div className={[style.component, bar].join(' ')}>
@@ -14,14 +14,14 @@ export const ControlBar = ({ isPencil, currentBar, canUndo, canRedo, gameTime, h
 
       <button
         className={[btn, (currentBar === Bars.CONFIRM_NG) ? selected : ''].join(' ')}
-        onClick={({ target }) => handleNGConfirm(target.classList.contains(selected))}
+        onClick={handleNGClick}
       >
         <div className={text}>New Game</div>
       </button>
 
       <button
         className={[btn, (currentBar === Bars.CONFIRM_RS) ? selected : ''].join(' ')}
-        onClick={({ target }) => handleRSConfirm(target.classList.contains(selected))}
+        onClick={handleRSClick}
       >
         <svg className={noEvents}>
           <use xlinkHref="./index.svg#restart"/>

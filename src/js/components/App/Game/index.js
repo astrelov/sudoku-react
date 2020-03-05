@@ -39,9 +39,28 @@ export class Game extends React.Component {
         this.setState({isPencil: !this.state.isPencil});
       },
 
-      handleNGConfirm: confirming => {
+      handleNGClick: () => {
         this.setState({
-          currentBar: confirming ? (this.state.isWin ? Bars.WIN : Bars.NBR) : Bars.CONFIRM_NG,
+          currentBar: (this.state.currentBar === Bars.CONFIRM_NG) ? (this.state.isWin ? Bars.WIN : Bars.NBR) : Bars.CONFIRM_NG,
+        });
+      },
+
+      handleNG: difficulty => {
+        this.clearGameClock();
+        this.setGameClock();
+
+        this.difficulty = difficulty;
+        const field = Game.generateField(this.difficulty);
+        this.initialField = Game.cloneField(field);
+        this.changesList = new ChangesList();
+
+        this.setState({
+          field,
+          nbrsAmount: Game.countNbrs(field),
+          isWin: false,
+          currentBar: Bars.NBR,
+          canRedo: false,
+          canUndo: false,
         });
       },
 
@@ -51,10 +70,23 @@ export class Game extends React.Component {
         });
       },
 
-      handleRSConfirm: confirming => {
+      handleRSClick: () => {
         this.setState({
-          currentBar: confirming ? (this.state.isWin ? Bars.WIN : Bars.NBR) : Bars.CONFIRM_RS,
+          currentBar: (this.state.currentBar === Bars.CONFIRM_RS) ? (this.state.isWin ? Bars.WIN : Bars.NBR) : Bars.CONFIRM_RS,
         });
+      },
+
+      handleRS: () => {
+        this.setState({
+          field: Game.cloneField(this.initialField),
+          nbrsAmount: Game.countNbrs(this.initialField),
+          isWin: false,
+          currentBar: Bars.NBR,
+          canRedo: false,
+          canUndo: false,
+        });
+
+        this.changesList = new ChangesList();
       },
 
       handleRSReject: () => {
@@ -285,38 +317,6 @@ export class Game extends React.Component {
         }
       },
 
-      handleNG: difficulty => {
-        this.clearGameClock();
-        this.setGameClock();
-
-        this.difficulty = difficulty;
-        const field = Game.generateField(this.difficulty);
-        this.initialField = Game.cloneField(field);
-        this.changesList = new ChangesList();
-
-        this.setState({
-          field,
-          nbrsAmount: Game.countNbrs(field),
-          isWin: false,
-          currentBar: Bars.NBR,
-          canRedo: false,
-          canUndo: false,
-        });
-      },
-
-      handleRS: () => {
-        this.setState({
-          field: Game.cloneField(this.initialField),
-          nbrsAmount: Game.countNbrs(this.initialField),
-          isWin: false,
-          currentBar: Bars.NBR,
-          canRedo: false,
-          canUndo: false,
-        });
-
-        this.changesList = new ChangesList();
-      },
-
       handleUndo: () => {
         if (this.changesList.canUndo()) {
           const prevChanges = this.changesList.prevChanges();
@@ -484,7 +484,7 @@ export class Game extends React.Component {
     }
 
     const field = generateSolvedField();
-    const difficultyNumbersOpen = [58, 48, 40, 32, 24];
+    const difficultyNumbersOpen = [80, 58, 48, 40, 32, 24];
     let x;
     let y;
     let filledBoxes = 81;
