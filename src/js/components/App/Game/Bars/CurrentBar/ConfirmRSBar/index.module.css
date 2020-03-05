@@ -1,0 +1,16 @@
+.component {
+    justify-content: center;
+}
+
+.btnImg {
+    width: 75%;
+    height: 75%;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 2%;
+    margin-right: 2%;
+}

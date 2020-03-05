@@ -1,4 +1,5 @@
 import React from 'react';
+import {bar} from '../../../Bars/index.module.css'
 import style from './index.module.css';
 import {Text} from '../../../../../Text';
 
@@ -12,7 +13,7 @@ export const WinBar = ({gameTime, difficulty}) => {
   if (seconds) timeStr += seconds + 's';
 
   return (
-    <div className={style.component}>
+    <div className={[style.component, bar].join(' ')}>
       <Text>
         Win! Difficulty: {difficulty}, time: {timeStr}!
       </Text>

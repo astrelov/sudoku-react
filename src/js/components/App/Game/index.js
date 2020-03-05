@@ -1,7 +1,7 @@
 import React from 'react';
 import {Field} from './Field';
-import {ControlBar} from './GameBars/ControlBar';
-import {CurrentBar} from './GameBars/CurrentBar';
+import {ControlBar} from './Bars/ControlBar';
+import {CurrentBar} from './Bars/CurrentBar';
 import style from './index.module.css';
 
 export const Bars = {

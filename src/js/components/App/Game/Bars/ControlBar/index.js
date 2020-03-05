@@ -1,5 +1,6 @@
 import React from 'react';
 import {selected, noEvents} from '../../../../App/index.module.css';
+import {bar, btn} from '../../Bars/index.module.css'
 import style from './index.module.css';
 import {Button} from '../../../../Button';
 import {Image} from '../../../../Image';
@@ -11,11 +12,11 @@ export const ControlBar = ({isPencil, currentBar, canUndo, canRedo, gameTime, ha
   const {handleNGConfirm, handleRSConfirm, handlePencilChange, handleUndo, handleRedo} = handlers;
 
   return (
-    <div className={style.component}>
-      <GameClock classNames={[style.btn]} time={gameTime}/>
+    <div className={[style.component, bar].join(' ')}>
+      <GameClock classNames={[btn]} time={gameTime}/>
 
       <Button
-        classNames={[style.btn]}
+        classNames={[btn]}
         isSelected={currentBar === Bars.CONFIRM_NG}
         handleClick={({target}) => handleNGConfirm(target.classList.contains(selected))}
       >
@@ -23,7 +24,7 @@ export const ControlBar = ({isPencil, currentBar, canUndo, canRedo, gameTime, ha
       </Button>
 
       <Button
-        classNames={[style.btn]}
+        classNames={[btn]}
         isSelected={currentBar === Bars.CONFIRM_RS}
         handleClick={({target}) => handleRSConfirm(target.classList.contains(selected))}
       >
@@ -31,18 +32,18 @@ export const ControlBar = ({isPencil, currentBar, canUndo, canRedo, gameTime, ha
       </Button>
 
       <Button
-        classNames={[style.btn]}
+        classNames={[btn]}
         isSelected={isPencil}
         handleClick={handlePencilChange}
       >
         <Image src="/img/controls/pencil.svg" classNames={[noEvents]}/>
       </Button>
 
-      <Button classNames={[style.btn]} disabled={!canUndo} handleClick={handleUndo}>
+      <Button classNames={[btn]} disabled={!canUndo} handleClick={handleUndo}>
         <Image src="/img/controls/undo.svg" classNames={[noEvents]}/>
       </Button>
 
-      <Button classNames={[style.btn]} disabled={!canRedo} handleClick={handleRedo}>
+      <Button classNames={[btn]} disabled={!canRedo} handleClick={handleRedo}>
         <Image src="/img/controls/redo.svg" classNames={[noEvents]}/>
       </Button>
     </div>
