@@ -1,8 +1,8 @@
 import React from 'react';
 import {Header} from '../Header';
-import {Footer} from '../Footer';
 import {Game} from './Game';
 import {Leaderboard} from './Leaderboard';
+import {FieldHandler} from '../../field_handler';
 
 const ActiveElem = {
   LB: 1,
@@ -33,6 +33,7 @@ export class App extends React.Component {
         <Header/>
         {this.state.appState === ActiveElem.LB ? <Leaderboard /> :
           <Game
+            FieldHandler={FieldHandler}
             difficulty={this.difficulty}
             difficultyNames={this.difficultyNames}
             handleWin={this.handlers.handleWin}
