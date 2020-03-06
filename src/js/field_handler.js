@@ -1,5 +1,18 @@
 export class FieldHandler {
 
+  // Debug
+  static printField(field) {
+    console.log('------------------Field---------------------')
+    for (let y = 0; y < 9; y++) {
+      const row = []
+      for (let x = 0; x < 9; x++) {
+        row.push(field[x][y] || ' ');
+      }
+      console.log(row.join('|'))
+    }
+    console.log('--------------------------------------------')
+  }
+
   /**
    * Check win for field with multiple possible solutions
    * @param {Array<Array<Number>>} field
@@ -360,7 +373,7 @@ export class FieldHandler {
       }
     }
 
-    const field = FieldHandler.generateEmptyField();
+    const field = this.generateEmptyField();
 
     fillNumberRecursively(field);
     return field;
@@ -371,23 +384,126 @@ export class FieldHandler {
    * @param {Number} difficulty [0-4]
    */
   static generateField(difficulty) {
-    const field = FieldHandler.generateSolvedField()
-    const difficultyNumbersOpen = [80, 58, 48, 40, 32, 24];
+    const field = this.generateSolvedField()
+    const difficultyNumbersOpen = [58, 48, 40, 32, 24];
+    const coordsToKeepFilled = [];
     let x;
     let y;
     let filledBoxes = 81;
+    let safeToRemove;
+
+    coordsToKeepFilled.push(...this.findPairsInRows(field));
+    coordsToKeepFilled.push(...this.findPairsInColumns(field));
 
     while (filledBoxes > difficultyNumbersOpen[difficulty]) {
       x = Math.floor(Math.random() * 9);
       y = Math.floor(Math.random() * 9);
+      safeToRemove = !coordsToKeepFilled.some(([_x, _y]) => (_x === x && _y === y));
 
-      if (field[x][y]) {
+      if (field[x][y] && safeToRemove) {
         field[x][y] = 0;
         filledBoxes--;
       }
     }
 
     return field;
+  }
+
+  /**
+   * Find pairs of 3 nbrs of type 1 2 || 1 2
+   *                              2 3 || 3 1
+   *                              3 1 || 2 3
+   * 
+   * where they can be placed safely in 2 ways.
+   * Returns array of coords of one nbr for such pairs of 3
+   * to keep on field to ensure one solution
+   * 
+   * @returns {Array<Array<Number, Number>>}
+   */
+  static findPairsInColumns(field) {
+
+    function getY(nbr, x, field) {
+      for (let y = 0; y < 9; y++) {
+        if (field[x][y] === nbr) {
+          return y;
+        }
+      }
+    }
+
+    let n1, n2, n3, y2, y3;
+    const coordsToKeepFilled = [];
+
+    for (let field3x3IndX = 0; field3x3IndX < 9; field3x3IndX += 3) {
+      for (let x1 = field3x3IndX; x1 < field3x3IndX + 2; x1++){
+        for (let x2 = x1 + 1; x2 < field3x3IndX + 3; x2++) {
+          for (let y1 = 0; y1 < 3; y1++) {
+            n1 = field[x1][y1];
+            n2 = field[x2][y1];
+
+            y2 = getY(n1, x2, field);
+            y3 = getY(n2, x1, field);
+
+            if (
+              [y2, y3].some(y => [3, 4, 5].includes(y)) &&
+              [y2, y3].some(y => [6, 7, 8].includes(y))
+            ) {
+              n3 = field[x1][y2];
+              if (field[x2][y3] === n3) {
+                coordsToKeepFilled.push([x1, y1]);
+              }
+            }
+          }
+        }
+      }
+    }
+    return coordsToKeepFilled;
+  }
+
+  /**
+   * Find pairs of 3 nbrs of type 1 2 3 || 1 3 2
+   *                              2 3 1 || 2 1 3
+   * 
+   * where they can be placed safely in 2 ways.
+   * Returns array of coords of one nbr for such pairs of 3
+   * to keep on field to ensure one solution
+   */
+  static findPairsInRows(field) {
+
+    function getX(nbr, y, field) {
+      for (let x = 0; x < 9; x++) {
+        if (field[x][y] === nbr) {
+          return x;
+        }
+      }
+    }
+
+    let n1, n2, n3, x2, x3;
+    const coordsToKeepFilled = [];
+
+    for (let field3x3IndY = 0; field3x3IndY < 9; field3x3IndY += 3) {
+      for (let y1 = field3x3IndY; y1 < field3x3IndY + 2; y1++){
+        for (let y2 = y1 + 1; y2 < field3x3IndY + 3; y2++) {
+          for (let x1 = 0; x1 < 3; x1++) {
+            n1 = field[x1][y1];
+            n2 = field[x1][y2];
+
+            x2 = getX(n1, y2, field);
+            x3 = getX(n2, y1, field);
+
+            if (
+              [x2, x3].some(x => [3, 4, 5].includes(x)) &&
+              [x2, x3].some(x => [6, 7, 8].includes(x))
+            ) {
+              n3 = field[x2][y1];
+              if (field[x3][y2] === n3) {
+                coordsToKeepFilled.push([x1, y1]);
+              }
+            }
+          }
+        }
+      }
+    }
+    return coordsToKeepFilled;
   }
 }
 
