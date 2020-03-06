@@ -12,47 +12,47 @@ export class Leaderboard extends React.Component {
 
   render() {
     return (
-      <div id={style.component}>
-        <ul id="lb-difficulties">
+      <div className={style.component}>
+        <ul className={style.difficulties}>
           <button className="lb-difficulty-tab">newbie</button>
           <button className="lb-difficulty-tab">easy</button>
           <button className="lb-difficulty-tab">medium</button>
           <button className="lb-difficulty-tab">hard</button>
           <button className="lb-difficulty-tab">expert</button>
         </ul>
-        <ul id="lb-best-times">
-          <li className="best-time">
+        <ul className={style.bestTimes}>
+          <li className={style.bestTime}>
             <p>date</p><p>player name</p><p>time</p>
           </li>
-          <li className="best-time">
+          <li className={style.bestTime}>
             <p>date</p><p>player name</p><p>time</p>
           </li>
-          <li className="best-time">
+          <li className={style.bestTime}>
             <p>date</p><p>player name</p><p>time</p>
           </li>
-          <li className="best-time">
+          <li className={style.bestTime}>
             <p>date</p><p>player name</p><p>time</p>
           </li>
-          <li className="best-time">
+          <li className={style.bestTime}>
             <p>date</p><p>player name</p><p>time</p>
           </li>
-          <li className="best-time">
+          <li className={style.bestTime}>
             <p>date</p><p>player name</p><p>time</p>
           </li>
-          <li className="best-time">
+          <li className={style.bestTime}>
             <p>date</p><p>player name</p><p>time</p>
           </li>
-          <li className="best-time">
+          <li className={style.bestTime}>
             <p>date</p><p>player name</p><p>time</p>
           </li>
-          <li className="best-time">
+          <li className={style.bestTime}>
             <p>date</p><p>player name</p><p>time</p>
           </li>
-          <li className="best-time">
+          <li className={style.bestTime}>
             <p>date</p><p>player name</p><p>time</p>
           </li>
         </ul>
-        <div id="lb-control-bar">
+        <div className={style.controlBar}>
           <button>new game</button>
           <button>continue</button>
         </div>

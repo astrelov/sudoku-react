@@ -14,7 +14,7 @@
     background-color: inherit;
 }
 
-#lb-difficulties {
+.difficulties {
     grid-area: difficulty;
     padding: 0;
     margin: 0;
@@ -23,7 +23,7 @@
     justify-content: space-evenly;
 }
 
-#lb-best-times {
+.bestTimes {
     grid-area: best-times;
     padding: 0;
     margin: 0;
@@ -32,13 +32,13 @@
     height: 100%;
 }
 
-.best-time {
+.bestTime {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
 }
 
-#lb-control-bar {
+.controlBar {
     grid-area: control-bar;
     display: flex;
     align-items: center;
