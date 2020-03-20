@@ -1,13 +1,14 @@
 import React from 'react';
-import {selected, text} from '../../../../../../App/index.module.css'
+import {selected, text} from '../../../../../../App/index.module.css';
 import style from './index.module.css';
 
 export const NbrWrapper = ({x, y, fieldModel, isInitial, selectedNbr}) => {
   function getWrapperClasses(value, selectedNbr, isInitial) {
     const classes = [];
     const isSelected = selectedNbr &&
-      ((value === selectedNbr) || (Array.isArray(value) && value.includes(selectedNbr)));
-    
+        ((value === selectedNbr) || (Array.isArray(value) && value.includes(
+            selectedNbr)));
+
     isSelected && classes.push(selected);
     isInitial && classes.push(style.initialWrapper);
 
@@ -20,14 +21,15 @@ export const NbrWrapper = ({x, y, fieldModel, isInitial, selectedNbr}) => {
     isInitial && classes.push(style.initialNbr);
 
     return <div
-      className={classes.join(' ')}>{value}</div>;
+        className={classes.join(' ')}>{value}</div>;
   }
 
   function getPnclNbrs(value) {
     const nbrs = [];
 
     value.forEach(nbr => {
-      nbrs.push(<div className={[style.pnclVal, text].join(' ')} key={nbr.toString()}>{nbr}</div>);
+      nbrs.push(<div className={[style.pnclVal, text].join(' ')}
+                     key={nbr.toString()}>{nbr}</div>);
     });
 
     return nbrs;
@@ -44,5 +46,6 @@ export const NbrWrapper = ({x, y, fieldModel, isInitial, selectedNbr}) => {
     nbrs = getNbr(value, isInitial);
   }
 
-  return <div className={style.component + ' ' + wrapperClasses.join(' ')}>{nbrs}</div>;
+  return <div
+      className={style.component + ' ' + wrapperClasses.join(' ')}>{nbrs}</div>;
 };

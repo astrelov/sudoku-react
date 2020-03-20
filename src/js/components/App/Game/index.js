@@ -3,7 +3,7 @@ import style from './index.module.css';
 import {Field} from './Field';
 import {ControlBar} from './Bars/ControlBar';
 import {CurrentBar} from './Bars/CurrentBar';
-import {ChangesList} from '../../../field_handler'
+import {ChangesList} from '../../../field_handler';
 
 export const Bars = {
   NBR: 1,
@@ -20,7 +20,9 @@ export class Game extends React.Component {
     this.difficultyNames = props.difficultyNames || ['1', '2', '3', '4', '5'];
     this.difficulty = props.difficulty || 0;
 
-    const field = this.FieldHandler.generateField(this.difficulty);
+    this.solvedField = this.FieldHandler.generateSolvedField();
+    const field = this.FieldHandler.emptySolvedField(this.solvedField,
+        this.difficulty);
     this.initialField = this.FieldHandler.cloneField(field);
     this.changesList = new ChangesList();
     this.setGameClock();
@@ -43,7 +45,8 @@ export class Game extends React.Component {
 
       handleNGClick: () => {
         this.setState({
-          currentBar: (this.state.currentBar === Bars.CONFIRM_NG) ? (this.state.isWin ? Bars.WIN : Bars.NBR) : Bars.CONFIRM_NG,
+          currentBar: (this.state.currentBar === Bars.CONFIRM_NG)
+              ? (this.state.isWin ? Bars.WIN : Bars.NBR) : Bars.CONFIRM_NG,
         });
       },
 
@@ -52,7 +55,9 @@ export class Game extends React.Component {
         this.setGameClock();
 
         this.difficulty = difficulty;
-        const field = this.FieldHandler.generateField(this.difficulty);
+        this.solvedField = this.FieldHandler.generateSolvedField();
+        const field = this.FieldHandler.emptySolvedField(this.solvedField,
+            this.difficulty);
         this.initialField = this.FieldHandler.cloneField(field);
         this.changesList = new ChangesList();
 
@@ -74,7 +79,8 @@ export class Game extends React.Component {
 
       handleRSClick: () => {
         this.setState({
-          currentBar: (this.state.currentBar === Bars.CONFIRM_RS) ? (this.state.isWin ? Bars.WIN : Bars.NBR) : Bars.CONFIRM_RS,
+          currentBar: (this.state.currentBar === Bars.CONFIRM_RS)
+              ? (this.state.isWin ? Bars.WIN : Bars.NBR) : Bars.CONFIRM_RS,
         });
       },
 
@@ -103,12 +109,12 @@ export class Game extends React.Component {
 
       handleInput: (x, y) => {
         const changes = this.FieldHandler.updateValueAt(
-          x,
-          y,
-          this.state.field,
-          this.state.selectedNbr,
-          this.state.nbrsAmount,
-          this.state.isPencil
+            x,
+            y,
+            this.state.field,
+            this.state.selectedNbr,
+            this.state.nbrsAmount,
+            this.state.isPencil
         );
 
         if (changes) {
@@ -121,7 +127,7 @@ export class Game extends React.Component {
             canRedo: this.changesList.canRedo(),
           });
 
-          if (this.FieldHandler.isWin(this.state.field, this.state.nbrsAmount)) {
+          if (this.FieldHandler.isWin(this.state.field, this.solvedField)) {
             this.handlers.handleWin();
           }
         }
@@ -131,13 +137,14 @@ export class Game extends React.Component {
         if (this.changesList.canUndo()) {
           const prevChanges = this.changesList.prevChanges();
 
-          prevChanges.valMap.forEach(([oldValue], [x, y]) => this.FieldHandler.replaceValueAt(
-            x,
-            y,
-            oldValue,
-            this.state.field,
-            this.state.nbrsAmount
-          ));
+          prevChanges.valMap.forEach(
+              ([oldValue], [x, y]) => this.FieldHandler.replaceValueAt(
+                  x,
+                  y,
+                  oldValue,
+                  this.state.field,
+                  this.state.nbrsAmount
+              ));
           this.setState({
             field: this.state.field, nbrsAmount: this.state.nbrsAmount,
             canUndo: this.changesList.canUndo(),
@@ -150,13 +157,14 @@ export class Game extends React.Component {
         if (this.changesList.canRedo()) {
           const nextChanges = this.changesList.nextChanges();
 
-          nextChanges.valMap.forEach(([, newValue], [x, y]) => this.FieldHandler.replaceValueAt(
-            x,
-            y,
-            newValue,
-            this.state.field,
-            this.state.nbrsAmount
-          ));
+          nextChanges.valMap.forEach(
+              ([, newValue], [x, y]) => this.FieldHandler.replaceValueAt(
+                  x,
+                  y,
+                  newValue,
+                  this.state.field,
+                  this.state.nbrsAmount
+              ));
           this.setState({
             field: this.state.field, nbrsAmount: this.state.nbrsAmount,
             canUndo: this.changesList.canUndo(),
@@ -183,8 +191,10 @@ export class Game extends React.Component {
   setGameClock() {
     this.startTime = new Date().valueOf();
     this.gameClockID = setInterval(
-      () => this.setState({gameTime: Math.round((new Date().valueOf() - this.startTime) / 1000)}),
-      1000
+        () => this.setState({
+          gameTime: Math.round((new Date().valueOf() - this.startTime) / 1000)
+        }),
+        1000
     );
   }
 
@@ -194,32 +204,32 @@ export class Game extends React.Component {
 
   render() {
     return (
-      <div className={style.component}>
-        <Field
-          fieldModel={this.state.field}
-          initialFieldModel={this.initialField}
-          selectedNbr={this.state.selectedNbr}
-          isWin={this.state.isWin}
-          handlers={this.handlers}
-        />
-        <CurrentBar
-          nbrsAmount={this.state.nbrsAmount}
-          selectedNbr={this.state.selectedNbr}
-          gameTime={this.state.gameTime}
-          currentBar={this.state.currentBar}
-          difficultyNames={this.difficultyNames}
-          difficulty={this.difficulty}
-          handlers={this.handlers}
-        />
-        <ControlBar
-          currentBar={this.state.currentBar}
-          isPencil={this.state.isPencil}
-          canUndo={this.state.canUndo}
-          canRedo={this.state.canRedo}
-          gameTime={this.state.gameTime}
-          handlers={this.handlers}
-        />
-      </div>
+        <div className={style.component}>
+          <Field
+              fieldModel={this.state.field}
+              initialFieldModel={this.initialField}
+              selectedNbr={this.state.selectedNbr}
+              isWin={this.state.isWin}
+              handlers={this.handlers}
+          />
+          <CurrentBar
+              nbrsAmount={this.state.nbrsAmount}
+              selectedNbr={this.state.selectedNbr}
+              gameTime={this.state.gameTime}
+              currentBar={this.state.currentBar}
+              difficultyNames={this.difficultyNames}
+              difficulty={this.difficulty}
+              handlers={this.handlers}
+          />
+          <ControlBar
+              currentBar={this.state.currentBar}
+              isPencil={this.state.isPencil}
+              canUndo={this.state.canUndo}
+              canRedo={this.state.canRedo}
+              gameTime={this.state.gameTime}
+              handlers={this.handlers}
+          />
+        </div>
     );
   }
 }

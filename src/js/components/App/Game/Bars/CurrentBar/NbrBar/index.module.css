@@ -1,20 +1,20 @@
 .component {
-    justify-content: space-evenly !important;
+  justify-content: space-evenly !important;
 }
 
 .btn {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .nbr {
-    margin: 0 !important;
-    font-size: 2rem !important;
+  margin: 0 !important;
+  font-size: 2rem !important;
 }
 
 .nbrAmount {
-    margin: -0.6vmin 0 0 !important;
-    font-size: 1.1rem !important;
+  margin: -0.6vmin 0 0 !important;
+  font-size: 1.1rem !important;
 }

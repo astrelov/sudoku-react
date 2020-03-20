@@ -1,46 +1,46 @@
 .component {
-    display: grid;
-    grid-template-rows: 1fr 8fr 1fr;
-    grid-template-columns: 1fr;
-    grid-template-areas: 'difficulty' 'best-times' 'control-bar';
-    width: 72vmin;
-    min-width: 500px;
-    height: 80vmin;
-    min-height: 500px;
-    margin: auto;
-    margin-top: 40px;
-    align-items: center;
-    justify-content: center;
-    background-color: inherit;
+  display: grid;
+  grid-template-rows: 1fr 8fr 1fr;
+  grid-template-columns: 1fr;
+  grid-template-areas: 'difficulty' 'best-times' 'control-bar';
+  width: 72vmin;
+  min-width: 500px;
+  height: 80vmin;
+  min-height: 500px;
+  margin: auto;
+  margin-top: 40px;
+  align-items: center;
+  justify-content: center;
+  background-color: inherit;
 }
 
 .difficulties {
-    grid-area: difficulty;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+  grid-area: difficulty;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 .bestTimes {
-    grid-area: best-times;
-    padding: 0;
-    margin: 0;
-    justify-self: center;
-    width: 100%;
-    height: 100%;
+  grid-area: best-times;
+  padding: 0;
+  margin: 0;
+  justify-self: center;
+  width: 100%;
+  height: 100%;
 }
 
 .bestTime {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 .controlBar {
-    grid-area: control-bar;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+  grid-area: control-bar;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }

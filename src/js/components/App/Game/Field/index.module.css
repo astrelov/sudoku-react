@@ -1,9 +1,9 @@
 .component {
-    display: grid;
-    grid-template-columns: repeat(3, auto);
-    grid-template-rows: repeat(3, auto);
-    margin: auto;
-    width: fit-content;
-    background-color: inherit;
-    user-select: none;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: repeat(3, auto);
+  margin: auto;
+  width: fit-content;
+  background-color: inherit;
+  user-select: none;
 }

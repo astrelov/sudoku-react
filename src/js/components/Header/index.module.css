@@ -1,17 +1,17 @@
 .component {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 4vmin;
-    color: rgb(200, 200, 200);
-    text-align: center;
-    position: absolute;
-    top: 0;
-    font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 4vmin;
+  color: rgb(200, 200, 200);
+  text-align: center;
+  position: absolute;
+  top: 0;
+  font-size: 2rem;
 }
 
 .component > p {
-    font-size: inherit;
-    margin: 0;
+  font-size: inherit;
+  margin: 0;
 }

@@ -1,171 +1,163 @@
+import {Solver} from './solver';
+
 export class FieldHandler {
 
   // Debug
   static printField(field) {
-    console.log('------------------Field---------------------')
+    console.log('------------------Field---------------------');
     for (let y = 0; y < 9; y++) {
-      const row = []
+      const row = [];
       for (let x = 0; x < 9; x++) {
         row.push(field[x][y] || ' ');
       }
-      console.log(row.join('|'))
+      console.log(row.join('|'));
     }
-    console.log('--------------------------------------------')
+    console.log('--------------------------------------------');
+  }
+
+  // Debug
+  static printFields(f1, f2) {
+    console.log('------------------Field---------------------');
+    for (let y = 0; y < 9; y++) {
+      const row1 = [];
+      const row2 = [];
+      for (let x = 0; x < 9; x++) {
+        row1.push(f1[x][y] || ' ');
+        row2.push(f2[x][y] || ' ');
+      }
+      console.log(row1.join('|'), '   ', row2.join('|'));
+    }
+    console.log('--------------------------------------------');
+  }
+
+  // Debug
+  static diffFields(f1, f2) {
+    console.log('------------------Field---------------------');
+    for (let y = 0; y < 9; y++) {
+      const row1 = [];
+      const row2 = [];
+      for (let x = 0; x < 9; x++) {
+        if (f1[x][y] === f2[x][y]) {
+          row1.push('*');
+          row2.push('*');
+        } else {
+          row1.push(f1[x][y] || ' ');
+          row2.push(f2[x][y] || ' ');
+        }
+      }
+      console.log(row1.join('|'), '   ', row2.join('|'));
+    }
+    console.log('--------------------------------------------');
   }
 
   /**
-   * Check win for field with multiple possible solutions
-   * @param {Array<Array<Number>>} field
-   * @param {Array<Number>} nbrsAmount
+   * Inner FieldHandler's checker.
+   * If the box contains pencil numbers.
+   *
+   * @param value
+   * @returns {Boolean}
    */
-  static isWin(field, nbrsAmount) {
-    const allNums = '123456789';
+  static isPencilVals(value) {
+    return Array.isArray(value);
+  }
 
-    function fieldIsFilledFull(nbrsAmount) {
-      nbrsAmount[0] = 0;
-      return nbrsAmount.reduce((acc, numAmount) => acc + numAmount, 0) === 81;
-    }
-
-    function checkWinRows(field) {
-      let row;
-
+  static fieldsAreEqual(f1, f2) {
+    for (let x = 0; x < 9; x++) {
       for (let y = 0; y < 9; y++) {
-        row = [];
-
-        for (let x = 0; x < 9; x++) {
-          row.push(field[x][y]);
-        }
-
-        row = row.sort().join('');
-
-        if (row !== allNums) {
+        if (f1[x][y] !== f2[x][y]) {
           return false;
         }
       }
-
-      return true;
     }
+    return true;
+  }
 
-    function checkWinColumns(field) {
-      return field.every(column => {
-        let columnStr = column
-          .slice()
-          .sort()
-          .join('');
-
-        return columnStr === allNums;
-      });
-    }
-
-    function checkWin3x3(field) {
-      let nums3x3;
-
-      for (let x3 = 0; x3 < 9; x3 += 3) {
-        for (let y3 = 0; y3 < 9; y3 += 3) {
-          nums3x3 = [];
-          for (let x = x3; x < x3 + 3; x++) {
-            for (let y = y3; y < y3 + 3; y++) {
-              nums3x3.push(field[x][y]);
-            }
-          }
-          if (nums3x3.sort().join('') !== allNums) {
-            return false;
-          }
-        }
-      }
-      return true;
-    }
-
-    return (
-      fieldIsFilledFull(nbrsAmount) &&
-      checkWinRows(field) &&
-      checkWinColumns(field) &&
-      checkWin3x3(field)
-    );
+  /**
+   *
+   */
+  static isWin(field, solvedField) {
+    return FieldHandler.fieldsAreEqual(field, solvedField);
   }
 
   /**
    * Returns Changes if updated or false if not
-   * @param {Number} x 
-   * @param {Number} y 
-   * @param {Array<Array<Number>>} field 
-   * @param {Number} number 
-   * @param {Array<Number>} nbrsAmount 
-   * @param {Boolean} isPencil 
+   * @param {Number} x
+   * @param {Number} y
+   * @param {Array<Array<Number>>} field
+   * @param {Number} number
+   * @param {Array<Number>} nbrsAmount
+   * @param {Boolean} isPencil
    * @returns {Changes || null}
    */
+  // TODO search pencil numbers by traversing peers array
   static updateValueAt(x, y, field, number, nbrsAmount, isPencil) {
-    function clearPencilRow(
-      y,
-      changes,
-      field,
-      number
-    ) {
-      let oldValue;
-      let newValue;
+    function savePencilChange(field, x, y, number, changes) {
+      let oldValue, newValue;
 
+      oldValue = field[x][y].slice();
+      field[x][y].splice(field[x][y].indexOf(number), 1);
+      newValue = field[x][y].slice();
+      changes.add(x, y, oldValue, newValue);
+    }
+
+    function clearPencilRow(
+        y,
+        changes,
+        field,
+        number
+    ) {
       for (let x = 0; x < 9; x++) {
-        if (Array.isArray(field[x][y]) && field[x][y].includes(number)) {
-          oldValue = field[x][y].slice();
-          field[x][y].splice(field[x][y].indexOf(number), 1);
-          newValue = field[x][y].slice();
-          changes.add(x, y, oldValue, newValue);
+        if (FieldHandler.isPencilVals(field[x][y]) && field[x][y].includes(
+            number)) {
+          savePencilChange(field, x, y, number, changes);
         }
       }
     }
 
     function clearPencilCol(
-      x,
-      changes,
-      field,
-      number
+        x,
+        changes,
+        field,
+        number
     ) {
-      let oldValue;
-      let newValue;
 
       for (let y = 0; y < 9; y++) {
-        if (Array.isArray(field[x][y]) && field[x][y].includes(number)) {
-          oldValue = field[x][y].slice();
-          field[x][y].splice(field[x][y].indexOf(number), 1);
-          newValue = field[x][y].slice();
-          changes.add(x, y, oldValue, newValue);
+        if (FieldHandler.isPencilVals(field[x][y]) && field[x][y].includes(
+            number)) {
+          savePencilChange(field, x, y, number, changes);
         }
       }
     }
 
     function clearPencil3x3(
-      _x,
-      _y,
-      changes,
-      field,
-      number
+        _x,
+        _y,
+        changes,
+        field,
+        number
     ) {
-      function getStartCoordOf3x3(numX, numY) {
+      function getStartCoordOf3x3(nbrX, nbrY) {
         let start3x3X;
         let start3x3Y;
 
         for (let i = 0; i < 3; i++) {
-          if ((numX - i) % 3 === 0) {
-            start3x3X = numX - i;
+          if ((nbrX - i) % 3 === 0) {
+            start3x3X = nbrX - i;
           }
-          if ((numY - i) % 3 === 0) {
-            start3x3Y = numY - i;
+          if ((nbrY - i) % 3 === 0) {
+            start3x3Y = nbrY - i;
           }
         }
         return [start3x3X, start3x3Y];
       }
 
       const [start3x3X, start3x3Y] = getStartCoordOf3x3(_x, _y, field);
-      let oldValue;
-      let newValue;
 
       for (let x = start3x3X; x < start3x3X + 3; x++) {
         for (let y = start3x3Y; y < start3x3Y + 3; y++) {
-          if (Array.isArray(field[x][y]) && field[x][y].includes(number)) {
-            oldValue = field[x][y].slice();
-            field[x][y].splice(field[x][y].indexOf(number), 1);
-            newValue = field[x][y].slice();
-            changes.add(x, y, oldValue, newValue);
+          if (FieldHandler.isPencilVals(field[x][y]) && field[x][y].includes(
+              number)) {
+            savePencilChange(field, x, y, number, changes);
           }
         }
       }
@@ -173,7 +165,7 @@ export class FieldHandler {
 
     function inputPencilVal(x, y, field, number) {
       // if there is no array of pencil numbers => create it
-      if (!Array.isArray(field[x][y])) {
+      if (!FieldHandler.isPencilVals(field[x][y])) {
         field[x][y] = [];
       }
       // if no such number among pencil numbers => add it and sort them
@@ -200,7 +192,8 @@ export class FieldHandler {
     }
 
     const changes = new Changes();
-    const oldValue = Array.isArray(field[x][y]) ? field[x][y].slice() : field[x][y];
+    const oldValue = FieldHandler.isPencilVals(field[x][y])
+        ? field[x][y].slice() : field[x][y];
 
     // if there is a number => decrease amount
     if (field[x][y] && typeof field[x][y] === 'number') {
@@ -219,12 +212,13 @@ export class FieldHandler {
     } else {
       if (!field[x][y]) {
         // there is no value and it is not updated
-        return false;
+        return null;
       }
       field[x][y] = 0;
     }
 
-    const newValue = Array.isArray(field[x][y]) ? field[x][y].slice() : field[x][y];
+    const newValue = FieldHandler.isPencilVals(field[x][y])
+        ? field[x][y].slice() : field[x][y];
     changes.add(x, y, oldValue, newValue);
     return changes;
   }
@@ -232,24 +226,24 @@ export class FieldHandler {
   /**
    * Used for undo/redo actions when updating from ChangesList.
    * Simply replace value and decrease/increase amount if number removed/pasted respectively
-   * @param {Number} x 
-   * @param {Number} y 
-   * @param {Number || Array<Number>} value 
-   * @param {Array<Array<Number>>} field 
+   * @param {Number} x
+   * @param {Number} y
+   * @param {Number || Array} value
+   * @param {Array<Array>} field
    * @param {Array<Number>} nbrsAmount
    */
   static replaceValueAt(x, y, value, field, nbrsAmount) {
-    if (!Array.isArray(field[x][y])) {
+    if (!FieldHandler.isPencilVals(field[x][y])) {
       nbrsAmount[field[x][y]]--;
     }
-    if (!Array.isArray(value)) {
+    if (!FieldHandler.isPencilVals(value)) {
       nbrsAmount[value]++;
     }
     field[x][y] = value;
   }
 
   /**
-   * @param {Array<Array<Number>>} field
+   * @param {Array<Array>} field
    * @returns {Array<Number>} amount of each number on field:
    *                          [0(not used), amountOf(1), amountOf(2), ..., amountOf(9)]
    */
@@ -267,7 +261,7 @@ export class FieldHandler {
   /**
    * Full copy
    * @param {Array<Array<Number>>} field
-   * @returns {Array<Array<Number>>} fieldClone
+   * @returns {Array<Array>} fieldClone
    */
   static cloneField(field) {
     const clone = [];
@@ -279,13 +273,13 @@ export class FieldHandler {
   }
 
   /**
-   * @returns {Array<Array<0>>}
+   * @returns {Array<Array>}
    */
   static generateEmptyField() {
     const field = [];
 
     for (let y = 0; y < 9; y++) {
-      field.push(new Array(9).fill(0));
+      field.push(new Array(9).fill(''));
     }
     return field;
   }
@@ -295,215 +289,206 @@ export class FieldHandler {
    */
   static generateSolvedField() {
     function fillNumberRecursively(field, x = 0, y = 0) {
-      const nextNumX = (y + 1) % 9 ? x : x + 1;
-      const nextNumY = (y + 1) % 9;
-      const triedNums = field[x].slice(0, y);
-      let num;
+      const nextNbrX = (y + 1) % 9 ? x : x + 1;
+      const nextNbrY = (y + 1) % 9;
+      const triedNbrs = field[x].slice(0, y);
+      let nbr;
 
       // try to paste abcent amount of nums in column
       for (let i = 0; i < 9 - y; i++) {
         // choose a random number that was not tried before
         do {
-          num = Math.floor(Math.random() * 9) + 1;
-        } while (triedNums.includes(num));
+          nbr = Math.floor(Math.random() * 9) + 1;
+        } while (triedNbrs.includes(nbr));
 
-        if (
-          !isDuplicateInRow(num, x, y, field) &&
-          !isDuplicateInColumn(num, x, y, field) &&
-          !isDuplicateIn3x3(num, x, y, field)
-        ) {
-          field[x][y] = num;
-          if (nextNumX === 9 || fillNumberRecursively(field, nextNumX, nextNumY)) {
+        if (!FieldHandler.isDuplicate(nbr, x, y, field, peers)) {
+          field[x][y] = nbr;
+          if (nextNbrX === 9 || fillNumberRecursively(field, nextNbrX,
+              nextNbrY)) {
             return true;
           }
         }
-        triedNums.push(num);
+        triedNbrs.push(nbr);
         field[x][y] = 0;
       }
 
       return false;
     }
 
-    // x, y are coordinates of num being attempted to paste
-    function isDuplicateInRow(num, _x, _y, field) {
-      for (let x = 0; x < _x; x++) {
-        if (field[x][_y] === num) {
-          return true;
-        }
-      }
-      return false;
-    }
+    const field = FieldHandler.generateEmptyField();
 
-    // x, y are coordinates of num being attempted to paste
-    function isDuplicateInColumn(num, _x, _y, field) {
-      for (let y = 0; y < _y; y++) {
-        if (field[_x][y] === num) {
-          return true;
-        }
-      }
-      return false;
-    }
-
-    // x, y are coordinates of num being attempted to paste
-    function isDuplicateIn3x3(num, _x, _y, field) {
-      const [start3x3X, start3x3Y] = getStartCoordOf3x3(_x, _y);
-
-      for (let x = start3x3X; x < start3x3X + 3; x++) {
-        for (let y = start3x3Y; y < start3x3Y + 3; y++) {
-          if (field[x][y] === num) {
-            return true;
-          }
-        }
-      }
-      return false;
-
-      function getStartCoordOf3x3(numX, numY) {
-        let start3x3X;
-        let start3x3Y;
-
-        for (let i = 0; i < 3; i++) {
-          if ((numX - i) % 3 === 0) {
-            start3x3X = numX - i;
-          }
-          if ((numY - i) % 3 === 0) {
-            start3x3Y = numY - i;
-          }
-        }
-        return [start3x3X, start3x3Y];
-      }
-    }
-
-    const field = this.generateEmptyField();
+    const boxes = FieldHandler.getBoxes();
+    const rowsColsSquares = FieldHandler.getRowsColsSquares();
+    const units = FieldHandler.getUnits(boxes, rowsColsSquares);
+    const peers = FieldHandler.getPeers(boxes, units);
 
     fillNumberRecursively(field);
     return field;
   }
 
   /**
-   * Empties field filled recursively the way that solution is not always one.
+   *
+   * @returns {[]} array of string coords 'xy' for each box
+   */
+  static getBoxes() {
+    const indexes = '012345678';
+    const boxes = [];
+
+    for (let x of indexes) {
+      for (let y of indexes) {
+        boxes.push(x + y);
+      }
+    }
+
+    return boxes;
+  }
+
+  /**
+   *
+   * @returns {[]} array of entities arrays of boxes's 'xy' coords they contain
+   */
+  static getRowsColsSquares() {
+    const indexes = '012345678';
+    const sqIndexes = ['012', '345', '678'];
+    const rowsColsSquares = [];
+
+    for (let x of indexes) {
+      const column = [];
+
+      for (let y of indexes) {
+        column.push(x + y);
+      }
+      rowsColsSquares.push(column);
+    }
+
+    for (let y of indexes) {
+      const row = [];
+
+      for (let x of indexes) {
+        row.push(x + y);
+      }
+      rowsColsSquares.push(row);
+    }
+
+    for (let xSq of sqIndexes) {
+      for (let ySq of sqIndexes) {
+        const square = [];
+
+        for (let x of xSq) {
+          for (let y of ySq) {
+            square.push(x + y);
+          }
+        }
+        rowsColsSquares.push(square);
+      }
+    }
+
+    return rowsColsSquares;
+  }
+
+  /**
+   *
+   * @returns {Map<String, Array>} K = box's 'xy', V = array of col, row, square box is in
+   */
+  static getUnits() {
+    const boxes = FieldHandler.getBoxes();
+    const rowsColsSquares = FieldHandler.getRowsColsSquares();
+    const units = new Map();
+
+    for (let box of boxes) {
+      const isIn = [];
+
+      for (let entity of rowsColsSquares) {
+        if (entity.includes(box)) {
+          isIn.push(entity);
+        }
+      }
+
+      units.set(box, isIn);
+    }
+
+    return units;
+  }
+
+  /**
+   *
+   * @returns {Map<String, Array>} K = box's 'xy', V = array of box's peers (boxes's 'xy')
+   */
+  static getPeers() {
+    const boxes = FieldHandler.getBoxes();
+    const units = FieldHandler.getUnits();
+    const peers = new Map();
+
+    for (let box of boxes) {
+      const boxPeers = new Set();
+      const boxIsIn = units.get(box);
+
+      for (let entity of boxIsIn) {
+        for (let peerBox of entity) {
+          boxPeers.add(peerBox);
+        }
+      }
+      boxPeers.delete(box);
+      peers.set(box, boxPeers);
+    }
+
+    return peers;
+  }
+
+  /**
+   * If attempted to paste at [_x, _y] number is one of peers
+   * @param nbr
+   * @param _x
+   * @param _y
+   * @param field
+   * @param peers
+   * @returns {boolean}
+   */
+  static isDuplicate(nbr, _x, _y, field, peers) {
+    for (let peer of peers.get('' + _x + _y)) {
+      const peerX = peer[0];
+      const peerY = peer[1];
+
+      if (field[peerX][peerY] === nbr) {
+        return true;
+      }
+    }
+  }
+
+  /**
+   * @param solvedField
    * @param {Number} difficulty [0-4]
    */
-  static generateField(difficulty) {
-    const field = this.generateSolvedField()
-    const difficultyNumbersOpen = [58, 48, 40, 32, 24];
-    const coordsToKeepFilled = [];
+  static emptySolvedField(solvedField, difficulty) {
+    const peers = FieldHandler.getPeers();
+    const field = FieldHandler.cloneField(solvedField);
+    const openBoxes = [58, 48, 40, 32, 24];
+    const invalidBoxes = new Array(9).fill(0).map(() => []);
     let x;
     let y;
     let filledBoxes = 81;
-    let safeToRemove;
 
-    coordsToKeepFilled.push(...this.findPairsInRows(field));
-    coordsToKeepFilled.push(...this.findPairsInColumns(field));
-
-    while (filledBoxes > difficultyNumbersOpen[difficulty]) {
+    while (filledBoxes > openBoxes[difficulty]) {
       x = Math.floor(Math.random() * 9);
       y = Math.floor(Math.random() * 9);
-      safeToRemove = !coordsToKeepFilled.some(([_x, _y]) => (_x === x && _y === y));
 
-      if (field[x][y] && safeToRemove) {
+      if (field[x][y] && !invalidBoxes[x].includes(y)) {
+        invalidBoxes[x].push(y);
         field[x][y] = 0;
         filledBoxes--;
+        if (!Solver.solutionIsOne(solvedField, field, peers)) {
+          field[x][y] = solvedField[x][y];
+          filledBoxes++;
+        }
+      }
+
+      // if tried all the boxes, but got no luck => give it another try
+      if (invalidBoxes.reduce((amnt, x) => amnt + x.length, 0) === 81) {
+        return FieldHandler.emptySolvedField(solvedField, difficulty);
       }
     }
 
     return field;
-  }
-
-  /**
-   * Find pairs of 3 nbrs of type 1 2 || 1 2
-   *                              2 3 || 3 1
-   *                              3 1 || 2 3
-   * 
-   * where they can be placed safely in 2 ways.
-   * Returns array of coords of one nbr for such pairs of 3
-   * to keep on field to ensure one solution
-   * 
-   * @returns {Array<Array<Number, Number>>}
-   */
-  static findPairsInColumns(field) {
-
-    function getY(nbr, x, field) {
-      for (let y = 0; y < 9; y++) {
-        if (field[x][y] === nbr) {
-          return y;
-        }
-      }
-    }
-
-    let n1, n2, n3, y2, y3;
-    const coordsToKeepFilled = [];
-
-    for (let field3x3IndX = 0; field3x3IndX < 9; field3x3IndX += 3) {
-      for (let x1 = field3x3IndX; x1 < field3x3IndX + 2; x1++){
-        for (let x2 = x1 + 1; x2 < field3x3IndX + 3; x2++) {
-          for (let y1 = 0; y1 < 3; y1++) {
-            n1 = field[x1][y1];
-            n2 = field[x2][y1];
-
-            y2 = getY(n1, x2, field);
-            y3 = getY(n2, x1, field);
-
-            if (
-              [y2, y3].some(y => [3, 4, 5].includes(y)) &&
-              [y2, y3].some(y => [6, 7, 8].includes(y))
-            ) {
-              n3 = field[x1][y2];
-              if (field[x2][y3] === n3) {
-                coordsToKeepFilled.push([x1, y1]);
-              }
-            }
-          }
-        }
-      }
-    }
-    return coordsToKeepFilled;
-  }
-
-  /**
-   * Find pairs of 3 nbrs of type 1 2 3 || 1 3 2
-   *                              2 3 1 || 2 1 3
-   * 
-   * where they can be placed safely in 2 ways.
-   * Returns array of coords of one nbr for such pairs of 3
-   * to keep on field to ensure one solution
-   */
-  static findPairsInRows(field) {
-
-    function getX(nbr, y, field) {
-      for (let x = 0; x < 9; x++) {
-        if (field[x][y] === nbr) {
-          return x;
-        }
-      }
-    }
-
-    let n1, n2, n3, x2, x3;
-    const coordsToKeepFilled = [];
-
-    for (let field3x3IndY = 0; field3x3IndY < 9; field3x3IndY += 3) {
-      for (let y1 = field3x3IndY; y1 < field3x3IndY + 2; y1++){
-        for (let y2 = y1 + 1; y2 < field3x3IndY + 3; y2++) {
-          for (let x1 = 0; x1 < 3; x1++) {
-            n1 = field[x1][y1];
-            n2 = field[x1][y2];
-
-            x2 = getX(n1, y2, field);
-            x3 = getX(n2, y1, field);
-
-            if (
-              [x2, x3].some(x => [3, 4, 5].includes(x)) &&
-              [x2, x3].some(x => [6, 7, 8].includes(x))
-            ) {
-              n3 = field[x2][y1];
-              if (field[x3][y2] === n3) {
-                coordsToKeepFilled.push([x1, y1]);
-              }
-            }
-          }
-        }
-      }
-    }
-    return coordsToKeepFilled;
   }
 }
 
@@ -517,10 +502,10 @@ export class Changes {
   /**
    * Add value change to current move.
    *
-   * @param {Number} x : integer of range [0,8]
-   * @param {Number} y : integer of range [0,8]
-   * @param {Number || Array} oldValue : could be number [1,9] or array of numbers [1,9]
-   * @param {Number || Array} newValue : could be number [1,9] or array of numbers [1,9]
+   * @param {Number} x integer of range [0,8]
+   * @param {Number} y integer of range [0,8]
+   * @param {Number || Array} oldValue could be number [1,9] or array of numbers [1,9]
+   * @param {Number || Array} newValue could be number [1,9] or array of numbers [1,9]
    */
   add(x, y, oldValue, newValue) {
     this.valMap.set([x, y], [oldValue, newValue]);
@@ -534,8 +519,8 @@ export class ChangesList {
   }
 
   /**
-   * 
-   * @param {Changes} changes 
+   *
+   * @param {Changes} changes
    */
   addChanges(changes) {
     this.current.next = changes;
